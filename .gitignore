@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets / env
+.env
+.env.*
+!.env.example
+
+# Runtime state (per-game JSON, hand-editable but personal)
+data/
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code (local-only; project-wide settings.json may be committed)
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db
