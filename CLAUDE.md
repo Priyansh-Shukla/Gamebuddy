@@ -1,95 +1,118 @@
-# CLAUDE.md — Game Buddy
+# CLAUDE.md — GameBuddy
 
-> Context file for Claude Code. Read this first. Keep it updated as the project evolves.
+> Operating manual for Claude Code. Read first. Update as decisions evolve.
+> For full design rationale see [DESIGN.md](DESIGN.md).
 
 ## What this project is
 
-A personal "game buddy" that tracks singleplayer game progress across multiple
-titles and helps me resume after long breaks — telling me where I left off and
-planning a **spoiler-free** path for the next session.
+A personal "game buddy" for resuming singleplayer games after long breaks. Tells
+you where you left off and plans a **spoiler-safe** next session. Pulls progress
+from save files where possible; falls back to screenshots (later) and manual
+notes.
 
-The core problem: I play several singleplayer games at once, take work/life breaks,
-and forget where I was. Manual logging fails because I forget to log. So the system
-pulls progress signals automatically where it can, and lets me annotate where it can't.
+## Architecture (the short version)
 
-## Architecture (the important part)
+**Two knowledge stores, never mixed:**
 
-A tiered **signal hierarchy**. Each game uses the best available signal:
+| Store | Owner | Location | Contents |
+|---|---|---|---|
+| Game context | Us (in repo) | `games/<title>/` | Wiki-sourced MD files per game |
+| Player state | User (local) | `data/games/<title>.json` | Save-derived progress + annotations |
 
-1. **SaveFileProvider** (best) — parses a game's save files into normalized
-   observations. One parser per supported game. Deterministic, no guessing.
-2. **ScreenshotProvider** (universal fallback) — captures screen on hotkey (and
-   optionally on interval), runs OCR / vision extraction. Anchored on text-heavy
-   screens (quest log, map, journal) where signal is highest.
-3. **ManualProvider** (always available) — I just type what I did.
+**Signal hierarchy** for player state:
+1. `SaveFileProvider` — preferred, deterministic, one parser per game
+2. `ScreenshotProvider` — universal fallback (v2+, not v1)
+3. `ManualProvider` — always available
 
-All providers emit a normalized **Observation** (see src/providers/base.py).
-The **synthesis layer** (src/synthesis/) takes new observations + existing game
-state, updates the state, and produces the spoiler-safe summary + next-session plan.
-The **store** (src/store/) persists per-game state as JSON under data/games/.
+All providers emit a normalized `Observation`. Synthesis is a **one-shot
+Anthropic API call** — no agentic loops, no tool-use at synthesis time (any
+tool that can fetch external data during a resume is a spoiler vector).
+Tool-use **is** allowed at **onboarding** (wiki/walkthrough fetches), where
+there's no player to spoil.
 
-```
-collector (providers) --> Observation[] --> synthesis (Anthropic API) --> GameState --> store
-                                                       |
-                                                       v
-                                          spoiler-safe summary + next plan
-```
+The synthesis call receives observations + game-context entries filtered to
+the player's progression boundary, and returns a structured resume. Default
+model: `claude-opus-4-7` (overridable via env).
 
-## The spoiler rule (non-negotiable design constraint)
+## The spoiler rule (non-negotiable)
 
-The synthesis layer MUST NEVER surface information beyond my current progress point.
-- "What's next" guidance is phrased as gentle direction ("there's an objective marker
-  northeast of your last save"), never plot reveals.
-- Each GameState carries a `spoiler_boundary` describing how far I've explicitly chosen
-  to know. Synthesis never reads or reasons past it.
-- Save files are GOOD for spoiler-safety: they tell us exactly how far I've progressed,
-  so the boundary is precise.
+Spoiler safety is enforced **structurally**, not by asking the model nicely:
+synthesis only ever receives observations and game-context entries inside the
+player's progression boundary. The model cannot leak what it was never given.
+
+**Progression is a DAG** (per `games/<title>/progression.yaml`). Typed nodes
+(boss, area, item, story_beat, ending, …), `requires` and `suggests` edges.
+Generalizes linear games, open-world, and multi-ending.
+
+`GameState` carries a two-field boundary:
+- `observed: set[NodeId]` — what the save (or manual log) proves reached.
+- `declared: NodeId | None` — explicit user override; most distant node the
+  user is OK knowing about.
+
+**Filter mechanism:** every game-context entity MD has frontmatter declaring
+its `gates: [node_id, ...]`. An entity is eligible for the synthesis prompt
+iff `gates ⊆ observed`. Plain set-subset check at prompt-build time.
+
+**Spoiler-gated output:** each "what's next" suggestion has a `hint` layer
+(safe) and a `spoiler` layer (plot content). Spoilers are hidden by default;
+`gamebuddy resume <game> --reveal` opts in for that invocation.
 
 ## Conventions
 
 - Python 3.11+. Type hints everywhere. `dataclasses` for schemas.
 - Providers are pluggable: subclass `Provider`, implement `collect() -> list[Observation]`.
-- Adding a new game = add a save parser under src/providers/saves/<game>.py OR rely on
-  screenshot/manual. Never hardcode game logic into the synthesis layer.
-- Secrets (ANTHROPIC_API_KEY) come from env, never committed.
-- State files are human-readable JSON so I can hand-edit them.
+- Adding a game = add a save parser + game-context MD files. Never hardcode
+  game logic into the synthesis layer.
+- `ANTHROPIC_API_KEY` from env. Never committed.
+- Player state JSON is human-readable so it can be hand-edited.
+- CLI-first, on-demand. No daemon, no background process in v1.
 
 ## Current status
 
-- [x] Project scaffold + schemas
-- [x] ManualProvider
-- [x] Store (JSON per game)
-- [x] Subnautica save provider — STUB (format parsing not yet implemented)
-- [ ] Synthesis layer wired to Anthropic API
-- [ ] ScreenshotProvider (capture + vision extraction)
-- [ ] Subnautica save parser — real implementation
-- [ ] CLI entrypoint
+Pre-scaffold. Only `CLAUDE.md` and `DESIGN.md` exist. Nothing built yet.
 
-## Commands
+**v1 target: Sekiro** (developer's own second playthrough — full spoiler
+tolerance, used to validate synthesis quality before blind testing on v2
+Subnautica).
+
+v1 scope:
+- [ ] Project scaffold + schemas (`Observation`, `Boundary`, `GameState`, with `schema_version`)
+- [ ] `ManualProvider`
+- [ ] JSON store (per game)
+- [ ] Sekiro game-context: `meta.md`, `progression.yaml` (DAG), entity MDs with `gates` frontmatter
+- [ ] Sekiro save parser (`.sl2` — inspect real file, use community tooling, don't guess the binary format)
+- [ ] Prompt builder + envelope tests
+- [ ] Synthesis layer wired to Anthropic API (one-shot, no tools)
+- [ ] CLI: `onboard`, `sync`, `resume` (with `--reveal`), `status`, `log`
+
+## Commands (planned — not yet implemented)
 
 ```bash
-# install deps
+# install
 pip install -r requirements.txt
 
-# run tests
+# tests
 python -m pytest tests/ -v
 
-# log a manual session (once CLI is built)
-python -m src.cli log subnautica "Repaired the Aurora, building a Seamoth next"
-
-# ask where I left off
-python -m src.cli resume subnautica
+# CLI (once built)
+gamebuddy onboard sekiro          # fetch wiki, build game context
+gamebuddy sync sekiro             # read save, update player state
+gamebuddy resume sekiro           # synthesize and print session briefing
+gamebuddy status                  # all tracked games, last played
+gamebuddy log sekiro "<note>"     # manual annotation
 ```
-
-## First games to support
-
-Subnautica (active — best first target: singleplayer, parseable Unity saves),
-then Cyberpunk 2077 (community save tooling exists), then broaden via screenshots.
-Don't Starve Together is co-op/server-side — lower priority, fuzzier "progress".
 
 ## Notes for the agent
 
-- When implementing the Subnautica save parser, DON'T guess the binary format from
-  memory — inspect a real save file and/or check community tooling/docs first.
-- Keep the synthesis prompt's spoiler constraint explicit and tested.
-- This is a personal project on a personal machine/account — not GS infrastructure.
+- **Design-first**: for substantial new work, discuss the approach before
+  writing code. Open design questions still live in DESIGN.md.
+- **Don't guess binary save formats.** Inspect a real file, check community
+  tooling/docs (e.g. soulsmodding wiki for `.sl2`).
+- **Envelope tests are the spoiler defense.** The prompt builder is a pure
+  function; given a fixture `GameState` + game-context, assert the built
+  envelope contains zero entities whose `gates` are not a subset of
+  `observed`. Prompt-level instructions are not the defense.
+- **Filtering uses `gates ⊆ observed`.** Don't reach for graph traversal
+  during synthesis — the DAG is consulted at authoring time (and for the
+  `declared`→ancestors expansion); the per-entity check at prompt time is
+  set-subset.
