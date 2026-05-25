@@ -1,0 +1,199 @@
+# Sekiro progression DAG.
+#
+# Conventions:
+#   - `requires` is a HARD prerequisite: the node cannot be reached without those.
+#   - `suggests` is SOFT ordering: usually encountered after, but not gated.
+#
+# The world is largely non-linear after Ashina Castle, so many edges are `suggests`.
+# The major hard gates are: Genichiro at Ashina Castle (gates the three mid-game
+# branches), Folding Screen Monkeys (gates Divine Realm / Fountainhead access),
+# and the Owl iron-code choice (gates which late-game bosses and ending are reachable).
+
+nodes:
+  # --- Prologue / hub ---
+  - id: prologue_genichiro
+    type: story_beat
+  - id: lose_arm
+    type: story_beat
+    requires: [prologue_genichiro]
+  - id: shinobi_prosthetic
+    type: item
+    requires: [lose_arm]
+  - id: kusabimaru
+    type: item
+    requires: [lose_arm]
+
+  # --- Ashina Outskirts (opening area) ---
+  - id: ashina_outskirts
+    type: area
+    requires: [lose_arm]
+  - id: chained_ogre
+    type: boss
+    requires: [ashina_outskirts]
+  - id: gyoubu_oniwa
+    type: boss
+    requires: [ashina_outskirts]
+    suggests: [chained_ogre]
+  - id: headless
+    type: boss
+    requires: [ashina_outskirts]
+
+  # --- Hirata Estate (optional memory) ---
+  - id: hirata_estate
+    type: area
+    requires: [ashina_outskirts]
+  - id: juzou_the_drunkard
+    type: boss
+    requires: [hirata_estate]
+  - id: lady_butterfly
+    type: boss
+    requires: [hirata_estate]
+    suggests: [juzou_the_drunkard]
+
+  # --- Ashina Castle (mid-game hub) ---
+  - id: ashina_castle
+    type: area
+    requires: [gyoubu_oniwa]
+  - id: blazing_bull
+    type: boss
+    requires: [ashina_castle]
+  - id: genichiro_ashina
+    type: boss
+    requires: [ashina_castle]
+    suggests: [blazing_bull]
+  - id: mushin_arts
+    type: skill
+    requires: [genichiro_ashina]
+
+  # --- Abandoned Dungeon (optional side area off the castle) ---
+  - id: abandoned_dungeon
+    type: area
+    requires: [ashina_castle]
+  - id: shichimen_warrior
+    type: boss
+    requires: [abandoned_dungeon]
+
+  # --- Three mid-game branches, all gated on Genichiro ---
+  # Recommended order is Senpou -> Sunken Valley -> Ashina Depths, but all
+  # three open after Genichiro. We use `suggests` to encode the soft order.
+
+  # Senpou Temple
+  - id: senpou_temple
+    type: area
+    requires: [genichiro_ashina]
+  - id: armored_warrior
+    type: boss
+    requires: [senpou_temple]
+  - id: long_arm_centipede_senun
+    type: boss
+    requires: [senpou_temple]
+  - id: folding_screen_monkeys
+    type: boss
+    requires: [senpou_temple]
+    suggests: [armored_warrior]
+  - id: mortal_blade
+    type: item
+    requires: [folding_screen_monkeys]
+
+  # Sunken Valley
+  - id: sunken_valley
+    type: area
+    requires: [genichiro_ashina]
+    suggests: [senpou_temple]
+  - id: snake_eyes_shirahagi
+    type: boss
+    requires: [sunken_valley]
+  - id: long_arm_centipede_giraffe
+    type: boss
+    requires: [sunken_valley]
+  - id: gun_fort
+    type: area
+    requires: [sunken_valley, folding_screen_monkeys]
+  - id: guardian_ape
+    type: boss
+    requires: [gun_fort]
+
+  # Ashina Depths
+  - id: ashina_depths
+    type: area
+    requires: [genichiro_ashina]
+    suggests: [sunken_valley]
+  - id: mibu_village
+    type: area
+    requires: [ashina_depths]
+  - id: headless_ape
+    type: boss
+    requires: [ashina_depths, guardian_ape]
+  - id: corrupted_monk
+    type: boss
+    requires: [mibu_village]
+
+  # --- Fountainhead Palace (gated on Mortal Blade + Corrupted Monk) ---
+  - id: fountainhead_palace
+    type: area
+    requires: [mortal_blade, corrupted_monk]
+  - id: true_corrupted_monk
+    type: boss
+    requires: [fountainhead_palace]
+  - id: divine_dragon
+    type: boss
+    requires: [fountainhead_palace]
+    suggests: [true_corrupted_monk]
+
+  # --- Late game: Owl confrontation and ending branch ---
+  - id: ashina_reservoir_revisited
+    type: area
+    requires: [divine_dragon]
+  - id: seven_ashina_spears_shikibu
+    type: boss
+    requires: [ashina_reservoir_revisited]
+  - id: owl_iron_code_choice
+    type: story_beat
+    requires: [divine_dragon]
+
+  # Shura branch
+  - id: ending_shura
+    type: ending
+    requires: [owl_iron_code_choice]
+  # All other endings share a different choice
+  - id: great_shinobi_owl
+    type: boss
+    requires: [owl_iron_code_choice]
+
+  # Purification side-quest chain (optional memory revisit)
+  - id: kuro_aromatic_secret
+    type: story_beat
+    requires: [great_shinobi_owl]
+  - id: hirata_estate_revisited
+    type: area
+    requires: [kuro_aromatic_secret]
+  - id: owl_father
+    type: boss
+    requires: [hirata_estate_revisited]
+  - id: everblossom
+    type: item
+    requires: [owl_father]
+
+  # Return ending side-quest chain
+  - id: dragons_homecoming_quest
+    type: story_beat
+    requires: [great_shinobi_owl]
+
+  # Optional late-game fire boss (only reachable on non-Shura branches)
+  - id: demon_of_hatred
+    type: boss
+    requires: [great_shinobi_owl]
+
+  # Final boss + remaining endings
+  - id: isshin_sword_saint
+    type: boss
+    requires: [great_shinobi_owl]
+  - id: ending_immortal_severance
+    type: ending
+    requires: [isshin_sword_saint]
+  - id: ending_purification
+    type: ending
+    requires: [isshin_sword_saint, everblossom]
+  - id: ending_return
+    type: ending
+    requires: [isshin_sword_saint, dragons_homecoming_quest]
