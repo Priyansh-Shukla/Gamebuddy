@@ -1,0 +1,19 @@
+nodes:
+  - id: a
+    type: area
+  - id: b
+    type: boss
+    requires: [a]
+  - id: c
+    type: boss
+    requires: [a]
+  - id: d
+    type: boss
+    requires: [b]
+    suggests: [c]
+  - id: e
+    type: ending
+    requires: [d]
+  - id: f
+    type: item
+    requires: [b, c]
