@@ -9,7 +9,7 @@ description = "Spoiler-safe session recall for singleplayer games."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{ name = "Briggasonic" }]
-dependencies = ["PyYAML>=6", "click>=8"]
+dependencies = ["PyYAML>=6", "click>=8", "anthropic>=0.50"]
 
 [project.scripts]
 gamebuddy = "gamebuddy.cli:cli"

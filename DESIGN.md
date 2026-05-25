@@ -63,10 +63,18 @@ means adding a save parser, not touching synthesis.
 
 ### Synthesis Layer
 
-- **One-shot Anthropic API call.** Not an agentic loop, not tool-using.
-- **Tool-use is scoped:** allowed at **authoring time** (onboarding fetches
-  wikis), banned at **synthesis time** (any tool that can fetch external data
-  during a resume is a spoiler vector).
+- **One-shot Anthropic API call.** Not an agentic loop.
+- **Tool-use is scoped:** **data-fetching** tools (web search, web fetch,
+  file read, MCP, etc.) are banned at synthesis time — any tool that can
+  reach external content during a resume is a spoiler vector. Allowed at
+  **authoring time** (onboarding fetches wikis), where there is no player
+  to spoil.
+- **Structured output via forced `tool_use` is allowed at synthesis** — a
+  single tool whose `input_schema` *is* the `Summary` shape, with
+  `tool_choice={"type":"tool","name":"return_summary"}`. The tool fetches
+  nothing; it's a typed container for the model's response. This honors
+  the spoiler-vector intent of the rule while giving us reliable
+  structured output without prompt-level JSON parsing fragility.
 - Input: filtered game-context entries + player observations, both clipped to
   the spoiler boundary (see Spoiler Model).
 - Output: structured resume sections (see Resume Output Format).
