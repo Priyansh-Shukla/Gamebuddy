@@ -8,6 +8,7 @@ import click
 
 from gamebuddy.context import load_game_context
 from gamebuddy.envelope import build_envelope
+from gamebuddy.onboard import Onboarder
 from gamebuddy.paths import data_dir, games_dir, state_path
 from gamebuddy.providers.manual import ManualProvider
 from gamebuddy.schemas import SCHEMA_VERSION, Boundary, GameState, Summary
@@ -150,6 +151,34 @@ def _format_summary(summary: Summary, *, reveal: bool) -> str:
         lines.append(summary.completion)
 
     return "\n".join(lines).rstrip()
+
+
+@cli.command()
+@click.argument("game")
+@click.option(
+    "--force",
+    is_flag=True,
+    help="Overwrite existing files under games/<game>/.",
+)
+def onboard(game: str, force: bool) -> None:
+    """Draft a game-context for GAME via web research (one-time per game)."""
+    target = games_dir() / game
+    if target.exists() and any(target.iterdir()) and not force:
+        click.echo(
+            f"games/{game}/ already contains files. Re-run with --force to overwrite.",
+            err=True,
+        )
+        raise SystemExit(1)
+    target.mkdir(parents=True, exist_ok=True)
+
+    onboarder = Onboarder(
+        game_id=game,
+        target_dir=target,
+        output=lambda text: click.echo(text, nl=False),
+    )
+    written = onboarder.run()
+    click.echo(f"\n\nWrote {len(written)} files under {target}/")
+    click.echo("Review the draft, edit as needed, then commit.")
 
 
 def _humanize(td: timedelta) -> str:

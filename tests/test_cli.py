@@ -192,3 +192,54 @@ def test_resume_unknown_game_errors(env, monkeypatch):
     )
     result = CliRunner().invoke(cli, ["resume", "nonexistent"])
     assert result.exit_code != 0
+
+
+# ---- onboard ----------------------------------------------------------------
+
+
+class _FakeOnboarder:
+    """Stand-in for gamebuddy.cli.Onboarder during tests."""
+    last_kwargs = None
+
+    def __init__(self, **kwargs):
+        _FakeOnboarder.last_kwargs = kwargs
+        self._target = kwargs["target_dir"]
+
+    def run(self):
+        # Pretend we wrote one file
+        f = self._target / "meta.md"
+        f.write_text("ok", encoding="utf-8")
+        return [f]
+
+
+def test_onboard_refuses_when_target_has_files(tmp_path, monkeypatch):
+    monkeypatch.setenv("GAMEBUDDY_GAMES_DIR", str(tmp_path / "games"))
+    existing = tmp_path / "games" / "newgame"
+    existing.mkdir(parents=True)
+    (existing / "meta.md").write_text("existing", encoding="utf-8")
+
+    monkeypatch.setattr("gamebuddy.cli.Onboarder", _FakeOnboarder)
+    result = CliRunner().invoke(cli, ["onboard", "newgame"])
+    assert result.exit_code != 0
+    assert "already contains files" in result.output
+
+
+def test_onboard_proceeds_with_force(tmp_path, monkeypatch):
+    monkeypatch.setenv("GAMEBUDDY_GAMES_DIR", str(tmp_path / "games"))
+    existing = tmp_path / "games" / "newgame"
+    existing.mkdir(parents=True)
+    (existing / "meta.md").write_text("existing", encoding="utf-8")
+
+    monkeypatch.setattr("gamebuddy.cli.Onboarder", _FakeOnboarder)
+    result = CliRunner().invoke(cli, ["onboard", "newgame", "--force"])
+    assert result.exit_code == 0, result.output
+    assert "Wrote 1 files" in result.output
+
+
+def test_onboard_creates_target_dir(tmp_path, monkeypatch):
+    monkeypatch.setenv("GAMEBUDDY_GAMES_DIR", str(tmp_path / "games"))
+    monkeypatch.setattr("gamebuddy.cli.Onboarder", _FakeOnboarder)
+    result = CliRunner().invoke(cli, ["onboard", "freshgame"])
+    assert result.exit_code == 0, result.output
+    assert (tmp_path / "games" / "freshgame").is_dir()
+    assert _FakeOnboarder.last_kwargs["game_id"] == "freshgame"
