@@ -1,20 +1,20 @@
 """Tests for the .sl2 save-format framework.
 
-These cover the BND4 + AES-CBC layer with synthetic fixtures — no real
-Sekiro save file involved. The Sekiro AES key and field offsets are
-documented gaps in gamebuddy/providers/sekiro.py; they need a real save
-file to fill in.
+These cover the BND4 container, the AES-CBC crypto layer (for DS2/DS3/DSR/
+Elden Ring), and Sekiro's plaintext+MD5 slot framing. All synthetic — no
+real save file needed. Sekiro field offsets are the one remaining gap;
+they need a real save and a controlled state change to diff.
 """
 from __future__ import annotations
 
-import os
+import hashlib
 import struct
 from pathlib import Path
 
 import pytest
 
-from gamebuddy.providers.sekiro import SekiroSaveProvider, _load_key_from_env
-from gamebuddy.saves import bnd4, crypto
+from gamebuddy.providers.sekiro import SekiroSaveProvider
+from gamebuddy.saves import bnd4, crypto, sekiro_slot
 
 KEY_A = bytes.fromhex("00112233445566778899AABBCCDDEEFF")
 KEY_B = bytes.fromhex("FFEEDDCCBBAA99887766554433221100")
@@ -184,22 +184,44 @@ def test_end_to_end_bnd4_with_encrypted_entry():
     assert recovered == payload
 
 
+# ---- sekiro_slot: MD5-prefixed plaintext framing ---------------------------
+
+
+def test_sekiro_slot_wrap_unwrap_round_trip():
+    body = b"plaintext slot body, no AES on Sekiro"
+    wrapped = sekiro_slot.wrap(body)
+    assert len(wrapped) == sekiro_slot.MD5_LEN + len(body)
+    assert wrapped[: sekiro_slot.MD5_LEN] == hashlib.md5(body).digest()
+    assert sekiro_slot.unwrap(wrapped) == body
+
+
+def test_sekiro_slot_unwrap_rejects_tampered_body():
+    wrapped = bytearray(sekiro_slot.wrap(b"contents"))
+    wrapped[-1] ^= 0xFF
+    with pytest.raises(sekiro_slot.SlotError, match="MD5"):
+        sekiro_slot.unwrap(bytes(wrapped))
+
+
+def test_sekiro_slot_unwrap_rejects_too_short():
+    with pytest.raises(sekiro_slot.SlotError, match="too short"):
+        sekiro_slot.unwrap(b"\x00" * 8)
+
+
 # ---- Sekiro provider stub --------------------------------------------------
 
 
-def test_sekiro_provider_collect_errors_without_key(tmp_path, monkeypatch):
-    monkeypatch.delenv("GAMEBUDDY_SEKIRO_KEY", raising=False)
+def test_sekiro_provider_collect_errors_without_field_offsets(tmp_path):
     fake_save = tmp_path / "S0000.sl2"
     fake_save.write_bytes(b"\x00" * 0x40)  # contents don't matter; collect bails first
     provider = SekiroSaveProvider(fake_save)
-    with pytest.raises(NotImplementedError, match="AES key"):
+    with pytest.raises(NotImplementedError, match="field offsets"):
         provider.collect()
 
 
-def test_sekiro_provider_inspect_works_without_key(tmp_path):
-    """inspect() only parses BND4 — should work on a well-formed file without the key."""
-    payload = b"opaque"
-    wrapped = crypto.wrap(payload, KEY_A, iv=IV_ZERO)
+def test_sekiro_provider_inspect_works_on_md5_wrapped_entry(tmp_path):
+    """inspect() only parses BND4 — should work on a well-formed file."""
+    body = b"opaque slot body"
+    wrapped = sekiro_slot.wrap(body)
     blob = _build_bnd4([("USER_DATA000", wrapped, 0)])
     save_path = tmp_path / "S0000.sl2"
     save_path.write_bytes(blob)
@@ -207,28 +229,56 @@ def test_sekiro_provider_inspect_works_without_key(tmp_path):
     inspection = SekiroSaveProvider(save_path).inspect()
     assert inspection.entry_count == 1
     assert inspection.entries[0].name == "USER_DATA000"
+    # Round-trip through sekiro_slot too, to assert end-to-end shape:
+    recovered = sekiro_slot.unwrap(inspection.entries[0].data)
+    assert recovered == body
 
 
-def test_sekiro_key_loaded_from_env(monkeypatch):
-    monkeypatch.setenv("GAMEBUDDY_SEKIRO_KEY", "00112233445566778899AABBCCDDEEFF")
-    assert _load_key_from_env() == KEY_A
+# ---- Real-save fixture: lock in the empirical Sekiro layout ----------------
+#
+# tests/fixtures/sekiro_S0000.sl2 is a real save copied from the developer's
+# %APPDATA%\Sekiro\<SteamID>\S0000.sl2. It anchors the discovery that Sekiro
+# entries are plaintext bodies with an MD5 prefix.
+
+FIXTURE_SAVE = Path(__file__).parent / "fixtures" / "sekiro_S0000.sl2"
+# Body-relative offset where the Steam ID (u64 LE) sits in each occupied slot.
+STEAM_ID_BODY_OFFSET = 0x33ED4
 
 
-def test_sekiro_key_rejects_invalid_hex(monkeypatch):
-    monkeypatch.setenv("GAMEBUDDY_SEKIRO_KEY", "not-hex")
-    with pytest.raises(ValueError, match="hex"):
-        _load_key_from_env()
+def test_real_save_has_expected_bnd4_shape():
+    bnd = bnd4.parse(FIXTURE_SAVE.read_bytes())
+    assert len(bnd.entries) == 12
+    # 10 character slots + 2 trailing entries (profile/global, settings)
+    for i in range(10):
+        assert bnd.entries[i].name == f"USER_DATA{i:03}"
+        assert bnd.entries[i].header.size == 0x100010  # 16 (MD5) + 1 MiB body
+    assert bnd.entries[10].name == "USER_DATA010"
+    assert bnd.entries[11].name == "USER_DATA011"
 
 
-def test_sekiro_key_rejects_wrong_length(monkeypatch):
-    monkeypatch.setenv("GAMEBUDDY_SEKIRO_KEY", "AABB")
-    with pytest.raises(ValueError, match="16 bytes"):
-        _load_key_from_env()
+def test_real_save_every_entry_md5_verifies():
+    """Confirms the empirical claim: every USERDATA entry is [MD5][body] with no AES."""
+    bnd = bnd4.parse(FIXTURE_SAVE.read_bytes())
+    for entry in bnd.entries:
+        body = sekiro_slot.unwrap(entry.data)  # raises if MD5 mismatch
+        assert len(body) == len(entry.data) - sekiro_slot.MD5_LEN
 
 
-def test_sekiro_key_accepts_spaces_and_uppercase(monkeypatch):
-    monkeypatch.setenv(
-        "GAMEBUDDY_SEKIRO_KEY",
-        "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF",
-    )
-    assert _load_key_from_env() == KEY_A
+def test_real_save_steam_id_in_plaintext_at_known_offset():
+    """The Steam ID is sitting in plaintext at body offset 0x33ED4 in occupied slots.
+
+    This is the strongest local proof that slot bodies are not encrypted — a
+    known-plaintext sanity check that the layout assumption is correct.
+    """
+    bnd = bnd4.parse(FIXTURE_SAVE.read_bytes())
+    occupied_slots = []
+    for i in range(10):
+        body = sekiro_slot.unwrap(bnd.entries[i].data)
+        sid = int.from_bytes(body[STEAM_ID_BODY_OFFSET : STEAM_ID_BODY_OFFSET + 8], "little")
+        if sid != 0:
+            occupied_slots.append((i, sid))
+
+    assert len(occupied_slots) >= 1, "expected at least one occupied character slot"
+    # All occupied slots should report the same Steam ID (same player).
+    sids = {sid for _, sid in occupied_slots}
+    assert len(sids) == 1, f"slots disagree on Steam ID: {occupied_slots}"
