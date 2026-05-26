@@ -18,6 +18,7 @@ from gamebuddy.synthesis import (
     context_hash,
     render_user_prompt,
 )
+from gamebuddy.journal import to_html
 from gamebuddy.visualize import classify_nodes, count, to_dot
 
 
@@ -240,6 +241,38 @@ def map_(game: str, out: Path | None, fmt: str, reveal: bool) -> None:
             click.echo(f"dot failed: {exc.stderr}", err=True)
             raise SystemExit(1)
 
+    suffix = " (reveal)" if reveal else ""
+    click.echo(
+        f"Wrote {out}  "
+        f"[observed={counts.observed} frontier={counts.frontier} "
+        f"gated={counts.gated}]{suffix}"
+    )
+
+
+@cli.command("journal")
+@click.argument("game")
+@click.option(
+    "--out",
+    type=click.Path(dir_okay=False, path_type=Path),
+    default=None,
+    help="Output HTML file. Defaults to ./<game>-journal.html.",
+)
+@click.option(
+    "--reveal",
+    is_flag=True,
+    help="Authoring view — include gated nodes and unmask frontier titles.",
+)
+def journal(game: str, out: Path | None, reveal: bool) -> None:
+    """Render the player's journal as a standalone HTML file (Ship-Log style)."""
+    context = load_game_context(games_dir(), game)
+    path = state_path(game)
+    state = load_state(path) if path.exists() else None
+
+    if out is None:
+        out = Path(f"{game}-journal.html")
+    out.write_text(to_html(context, state, reveal=reveal), encoding="utf-8")
+
+    counts = count(classify_nodes(context, state))
     suffix = " (reveal)" if reveal else ""
     click.echo(
         f"Wrote {out}  "
