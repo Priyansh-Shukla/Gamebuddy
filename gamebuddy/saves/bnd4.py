@@ -1,9 +1,14 @@
 """BND4 container parsing.
 
 BND4 is FromSoftware's general-purpose file-container format (used since
-Dark Souls 2). An .sl2 file is one BND4 with eleven entries: ten USERDATA
-slots plus a settings entry. Each entry's data is independently encrypted
-(see crypto.py).
+Dark Souls 2). An .sl2 file is one BND4 with a game-specific number of
+USERDATA entries — Sekiro packs 12 (ten character slots + profile +
+settings); other Souls titles pack eleven.
+
+This module is purely structural: it parses headers, offsets, and entry
+byte ranges. How each entry's `data` is framed inside that range is the
+game-specific concern of `crypto.py` (AES-CBC games: DS2/DS3/DSR/Elden
+Ring) or `sekiro_slot.py` (Sekiro: plaintext + MD5 prefix only).
 
 Layout:
 
@@ -18,6 +23,11 @@ Field layouts are derived from SL2Bonfire's BonfireCore source
 (github.com/mi5hmash/SL2Bonfire). Several "magic" bytes in the header are
 not fully understood by the community; we read them for fidelity but
 don't validate them beyond the file signature.
+
+The `data` returned for each entry is the raw byte range from the file —
+for Sekiro that's `[MD5(16)][plaintext body]`; for AES-CBC titles it's
+`[MD5(16)][IV(16)][ciphertext][footer]`. Interpretation lives in the
+sibling modules, not here.
 """
 from __future__ import annotations
 
@@ -52,7 +62,7 @@ class Bnd4EntryHeader:
 @dataclass
 class Bnd4Entry:
     name: str
-    data: bytes            # raw entry bytes including MD5 + IV + ciphertext + footer
+    data: bytes            # raw entry bytes; framing is game-specific (see module docstring)
     header: Bnd4EntryHeader
 
 

@@ -1,7 +1,8 @@
 """Provider abstraction: anything that produces Observations.
 
-SaveFileProvider (later) parses a save file once per invocation;
-ScreenshotProvider (v2+) captures images; ManualProvider takes a CLI input.
+Save-file providers (e.g. `SekiroSaveProvider`) parse a save file once
+per invocation; `ScreenshotProvider` (v2+) will capture images;
+`ManualProvider` takes a CLI input.
 """
 from __future__ import annotations
 

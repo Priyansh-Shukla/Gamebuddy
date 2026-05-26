@@ -15,8 +15,8 @@ decrypts to a plaintext laid out as:
     [PKCS7 padding (1..16 bytes of value N where N is padding length)]
 
 The AES key is a per-game 16-byte secret. Pass it in; this module doesn't
-know which game it is. Sekiro's key lives in providers/sekiro.py
-(currently a stub — see that module).
+know which game it is. This path is for DS2/DS3/DSR/Elden Ring — Sekiro
+turned out to skip AES entirely and uses `sekiro_slot.py` instead.
 
 References:
   SL2Bonfire/BonfireCore — Bnd4Entry.cs (encryption + signing flow)

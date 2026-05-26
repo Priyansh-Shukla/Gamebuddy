@@ -6,7 +6,7 @@ from pathlib import Path
 
 import click
 
-from gamebuddy.context import load_game_context
+from gamebuddy.context import GameContext, load_game_context
 from gamebuddy.envelope import build_envelope
 from gamebuddy.onboard import Onboarder
 from gamebuddy.paths import data_dir, games_dir, state_path
@@ -20,6 +20,30 @@ from gamebuddy.synthesis import (
 )
 from gamebuddy.journal import to_html
 from gamebuddy.visualize import classify_nodes, count, to_dot
+
+
+def _load_view_inputs(game: str) -> tuple[GameContext, GameState | None]:
+    """Load game-context and player state (or None) for a view command."""
+    context = load_game_context(games_dir(), game)
+    path = state_path(game)
+    state = load_state(path) if path.exists() else None
+    return context, state
+
+
+def _echo_view_result(
+    out: Path,
+    context: GameContext,
+    state: GameState | None,
+    *,
+    reveal: bool,
+) -> None:
+    counts = count(classify_nodes(context, state))
+    suffix = " (reveal)" if reveal else ""
+    click.echo(
+        f"Wrote {out}  "
+        f"[observed={counts.observed} frontier={counts.frontier} "
+        f"gated={counts.gated}]{suffix}"
+    )
 
 
 @click.group()
@@ -208,12 +232,7 @@ def map_(game: str, out: Path | None, fmt: str, reveal: bool) -> None:
     import shutil
     import subprocess
 
-    context = load_game_context(games_dir(), game)
-    path = state_path(game)
-    state = load_state(path) if path.exists() else None
-
-    classes = classify_nodes(context, state)
-    counts = count(classes)
+    context, state = _load_view_inputs(game)
     dot = to_dot(context, state, reveal=reveal)
 
     if out is None:
@@ -241,12 +260,7 @@ def map_(game: str, out: Path | None, fmt: str, reveal: bool) -> None:
             click.echo(f"dot failed: {exc.stderr}", err=True)
             raise SystemExit(1)
 
-    suffix = " (reveal)" if reveal else ""
-    click.echo(
-        f"Wrote {out}  "
-        f"[observed={counts.observed} frontier={counts.frontier} "
-        f"gated={counts.gated}]{suffix}"
-    )
+    _echo_view_result(out, context, state, reveal=reveal)
 
 
 @cli.command("journal")
@@ -264,21 +278,13 @@ def map_(game: str, out: Path | None, fmt: str, reveal: bool) -> None:
 )
 def journal(game: str, out: Path | None, reveal: bool) -> None:
     """Render the player's journal as a standalone HTML file (Ship-Log style)."""
-    context = load_game_context(games_dir(), game)
-    path = state_path(game)
-    state = load_state(path) if path.exists() else None
+    context, state = _load_view_inputs(game)
 
     if out is None:
         out = Path(f"{game}-journal.html")
     out.write_text(to_html(context, state, reveal=reveal), encoding="utf-8")
 
-    counts = count(classify_nodes(context, state))
-    suffix = " (reveal)" if reveal else ""
-    click.echo(
-        f"Wrote {out}  "
-        f"[observed={counts.observed} frontier={counts.frontier} "
-        f"gated={counts.gated}]{suffix}"
-    )
+    _echo_view_result(out, context, state, reveal=reveal)
 
 
 def _humanize(td: timedelta) -> str:
