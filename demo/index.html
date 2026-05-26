@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GameBuddy v1 — demo</title>
+<style>
+  :root { color-scheme: dark; }
+  body { font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+         background: #0d1117; color: #c9d1d9; margin: 0; padding: 32px;
+         line-height: 1.55; max-width: 1100px; margin-left: auto; margin-right: auto; }
+  h1 { margin: 0 0 4px; font-size: 26px; }
+  h2 { margin: 32px 0 8px; font-size: 18px; padding-bottom: 4px;
+       border-bottom: 1px solid #30363d; }
+  h3 { margin: 18px 0 4px; font-size: 14px; color: #8b949e;
+       text-transform: uppercase; letter-spacing: 0.6px; }
+  p { margin: 0 0 12px; }
+  .sub { color: #8b949e; font-size: 14px; margin: 4px 0 24px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  .row.three { grid-template-columns: 1fr 1fr 1fr; }
+  .card { border: 1px solid #30363d; border-radius: 8px; padding: 12px 14px;
+          background: #161b22; }
+  .card .label { font-size: 11px; color: #8b949e; text-transform: uppercase;
+                 letter-spacing: 0.6px; margin-bottom: 4px; }
+  .card a { color: #58a6ff; text-decoration: none; font-size: 15px; font-weight: 600; }
+  .card a:hover { text-decoration: underline; }
+  .card .meta { color: #8b949e; font-size: 12px; margin-top: 4px; }
+  .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px;
+           background: #21262d; color: #8b949e; margin-right: 6px; }
+  .badge.obs { background: #1f3a25; color: #7ee787; }
+  .badge.fro { background: #4d2f10; color: #f0883e; }
+  .badge.gat { background: #21262d; color: #8b949e; }
+  pre { background: #161b22; border: 1px solid #30363d; border-radius: 6px;
+        padding: 12px; overflow-x: auto; font-size: 12px; }
+  code { background: #161b22; padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+  ul { padding-left: 22px; }
+  .callout { border-left: 3px solid #d29922; padding: 8px 14px; background: #1c1812;
+             border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<h1>GameBuddy v1 — demo</h1>
+<p class="sub">Spoiler-safe session recall for singleplayer games. v1 reference title: Sekiro.</p>
+
+<div class="callout">
+  All artifacts are real outputs of the v1 codebase, rendered against the
+  developer's actual Sekiro game-context (49 nodes, full progression DAG,
+  entity files with <code>gates</code> frontmatter). Player state is a fake
+  playthrough seeded by replaying <code>gamebuddy log sekiro &lt;node&gt;</code>
+  in three growing phases.
+</div>
+
+<h2>The headline shot — spoiler filter, side-by-side</h2>
+<p>The same checkpoint, rendered two ways. Left: <strong>masked</strong> (what the
+player sees — gated nodes omitted entirely, frontier nodes show only a type
+stub). Right: <strong>reveal</strong> (authoring view — the full 49-node DAG).
+Same code, same data; the only difference is one boolean.</p>
+
+<h3>Mid-game (14 observed)</h3>
+<div class="row">
+  <div class="card">
+    <div class="label">Masked — player view</div>
+    <a href="maps/sekiro-mid-masked.svg">sekiro-mid-masked.svg</a>
+    <div class="meta">
+      <span class="badge obs">14 observed</span>
+      <span class="badge fro">5 frontier</span>
+      <span class="badge gat">30 gated — invisible</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="label">Reveal — authoring view</div>
+    <a href="maps/sekiro-mid-reveal.svg">sekiro-mid-reveal.svg</a>
+    <div class="meta">All 49 nodes — bosses, areas, endings, items.</div>
+  </div>
+</div>
+
+<h2>Map evolution — the masked view as the player progresses</h2>
+<p>Watch the green island grow and the orange frontier shift outward. The grey
+"gated" region behind it stays invisible to the player the whole time.</p>
+<div class="row three">
+  <div class="card">
+    <div class="label">Bare — no progress yet</div>
+    <a href="maps/sekiro-bare-masked.svg">sekiro-bare-masked.svg</a>
+    <div class="meta">Nothing observed. The map is almost empty.</div>
+  </div>
+  <div class="card">
+    <div class="label">Early</div>
+    <a href="maps/sekiro-early-masked.svg">sekiro-early-masked.svg</a>
+    <div class="meta">
+      <span class="badge obs">6 obs</span>
+      <span class="badge fro">3 fro</span>
+      <span class="badge gat">40 gated</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="label">Mid</div>
+    <a href="maps/sekiro-mid-masked.svg">sekiro-mid-masked.svg</a>
+    <div class="meta">
+      <span class="badge obs">14 obs</span>
+      <span class="badge fro">5 fro</span>
+      <span class="badge gat">30 gated</span>
+    </div>
+  </div>
+</div>
+<div class="row three">
+  <div class="card">
+    <div class="label">Late</div>
+    <a href="maps/sekiro-late-masked.svg">sekiro-late-masked.svg</a>
+    <div class="meta">
+      <span class="badge obs">27 obs</span>
+      <span class="badge fro">9 fro</span>
+      <span class="badge gat">13 gated</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="label">Late — reveal (authoring)</div>
+    <a href="maps/sekiro-late-reveal.svg">sekiro-late-reveal.svg</a>
+    <div class="meta">Endings and final bosses visible. Player would never see this view.</div>
+  </div>
+  <div class="card">
+    <div class="label">Bare — reveal (full DAG)</div>
+    <a href="maps/sekiro-bare-reveal.svg">sekiro-bare-reveal.svg</a>
+    <div class="meta">The complete 49-node progression — what the developer authored.</div>
+  </div>
+</div>
+
+<h2>The journal — Ship-Log-style player view</h2>
+<p>One card per observed or frontier node, with type badges, first paragraph of
+the entity MD, and a "leads to" list. Frontier cards use stable
+<em>Rumor #N</em> handles so cross-references survive masking.</p>
+<div class="row three">
+  <div class="card">
+    <div class="label">Early</div>
+    <a href="journals/sekiro-early-masked.html">sekiro-early-masked.html</a>
+    <div class="meta">8 cards</div>
+  </div>
+  <div class="card">
+    <div class="label">Mid</div>
+    <a href="journals/sekiro-mid-masked.html">sekiro-mid-masked.html</a>
+    <div class="meta">15 cards</div>
+  </div>
+  <div class="card">
+    <div class="label">Late</div>
+    <a href="journals/sekiro-late-masked.html">sekiro-late-masked.html</a>
+    <div class="meta">30 cards</div>
+  </div>
+</div>
+<div class="row">
+  <div class="card">
+    <div class="label">Late — reveal (authoring)</div>
+    <a href="journals/sekiro-late-reveal.html">sekiro-late-reveal.html</a>
+    <div class="meta">Frontier cards unmasked. Comparison shot to the masked late.</div>
+  </div>
+</div>
+
+<h2>The envelope — what the model actually receives</h2>
+<p>This is the structural spoiler proof. <code>gamebuddy resume --dry-run</code>
+emits the exact prompt body that would be sent to the synthesis call.
+Compare the entity lists across phases:</p>
+<ul>
+  <li><strong>Early envelope:</strong> 8 entities. No mention of Genichiro, Ashina Castle, or anything past the Outskirts.</li>
+  <li><strong>Mid envelope:</strong> 15 entities. Genichiro is in. Senpou Temple and the Mortal Blade are not.</li>
+  <li><strong>Late envelope:</strong> 30 entities. Divine Dragon is in. Owl, Isshin, Demon of Hatred, and all four endings remain absent.</li>
+</ul>
+<p>The model literally cannot leak what it was never given.</p>
+<div class="row three">
+  <div class="card">
+    <div class="label">Early — 8 entities</div>
+    <a href="envelopes/sekiro-early.txt">sekiro-early.txt</a>
+    <div class="meta">16 KB</div>
+  </div>
+  <div class="card">
+    <div class="label">Mid — 15 entities</div>
+    <a href="envelopes/sekiro-mid.txt">sekiro-mid.txt</a>
+    <div class="meta">28 KB</div>
+  </div>
+  <div class="card">
+    <div class="label">Late — 30 entities</div>
+    <a href="envelopes/sekiro-late.txt">sekiro-late.txt</a>
+    <div class="meta">53 KB</div>
+  </div>
+</div>
+
+<h2>The <code>.sl2</code> discovery</h2>
+<p>A field note from building the Sekiro save-file provider. The plan was to
+extract an AES key via debugger, the way the community had done it for
+DS3 and Elden Ring. The actual finding: there is no key. Sekiro saves are
+plaintext + MD5. Five-minute hex-editor session deleted two hours of
+planned work.</p>
+<div class="row">
+  <div class="card" style="grid-column: 1 / -1;">
+    <div class="label">Read</div>
+    <a href="sl2_discovery.md">sl2_discovery.md</a>
+    <div class="meta">~1200 words.</div>
+  </div>
+</div>
+
+<h2>The briefing — synthesis mocked via subagent</h2>
+<p>Without an Anthropic API key we can't make the real one-shot call. Instead
+the late envelope (above) was handed verbatim to a Claude Opus subagent
+running with all tools disabled — same model class, same prompt, same
+"no data-fetching tools" constraint as the production call. The subagent's
+JSON response was then formatted through gamebuddy's own
+<code>_format_summary()</code>, so the output below is byte-identical to
+what <code>gamebuddy resume sekiro --reveal</code> would print.</p>
+<div class="callout">
+  Why a subagent: a fresh Claude with zero prior context is a faithful proxy
+  for what the real API call would see. If <em>I</em> synthesized this in
+  the main conversation, I'd have read the full DAG, design doc, memory,
+  and entity files — too much context to honestly simulate the structural
+  spoiler boundary.
+</div>
+<div class="row">
+  <div class="card">
+    <div class="label">Resume — masked (default)</div>
+    <a href="resume-late-masked.txt">resume-late-masked.txt</a>
+    <div class="meta">Spoiler layers replaced with <code>[hidden — use --reveal]</code>.</div>
+  </div>
+  <div class="card">
+    <div class="label">Resume — reveal</div>
+    <a href="resume-late-reveal.txt">resume-late-reveal.txt</a>
+    <div class="meta">Spoiler layers shown inline.</div>
+  </div>
+</div>
+<div class="row">
+  <div class="card" style="grid-column: 1 / -1;">
+    <div class="label">Raw subagent output (audit)</div>
+    <a href="synthesis-late-mock.json">synthesis-late-mock.json</a>
+    <div class="meta">The exact JSON the subagent returned. Conforms to <code>SUMMARY_SCHEMA</code> from <code>gamebuddy/synthesis.py</code>.</div>
+  </div>
+</div>
+
+<h2>What's not here</h2>
+<ul>
+  <li><strong>Real Anthropic API call</strong> — needs an API key (Pro
+  subscription doesn't apply). The subagent mock above is the closest
+  faithful simulation. The mechanical difference: real call uses
+  forced <code>tool_use</code> to return JSON; the subagent returns
+  JSON-in-tags.</li>
+  <li><strong>Save provider working end-to-end</strong> — the save-format
+  framework ships, but field-offset discovery is the last remaining v1
+  task. Needs a save-diff session at the controls.</li>
+</ul>
+
+</body>
+</html>

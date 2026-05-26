@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "game_id": "sekiro",
+  "last_synced": "2026-05-26T16:13:15.673129+00:00",
+  "boundary": {
+    "observed": [
+      "ashina_castle",
+      "ashina_outskirts",
+      "blazing_bull",
+      "chained_ogre",
+      "genichiro_ashina",
+      "gyoubu_oniwa",
+      "hirata_estate",
+      "juzou_the_drunkard",
+      "kusabimaru",
+      "lady_butterfly",
+      "lose_arm",
+      "mushin_arts",
+      "prologue_genichiro",
+      "shinobi_prosthetic"
+    ],
+    "declared": null
+  },
+  "observations": [
+    {
+      "timestamp": "2026-05-26T16:13:15.386053+00:00",
+      "source": "manual",
+      "node_id": "prologue_genichiro",
+      "payload": {
+        "text": "prologue_genichiro"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.404111+00:00",
+      "source": "manual",
+      "node_id": "lose_arm",
+      "payload": {
+        "text": "lose_arm"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.427496+00:00",
+      "source": "manual",
+      "node_id": "kusabimaru",
+      "payload": {
+        "text": "kusabimaru"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.449678+00:00",
+      "source": "manual",
+      "node_id": "shinobi_prosthetic",
+      "payload": {
+        "text": "shinobi_prosthetic"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.472367+00:00",
+      "source": "manual",
+      "node_id": "ashina_outskirts",
+      "payload": {
+        "text": "ashina_outskirts"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.495181+00:00",
+      "source": "manual",
+      "node_id": "chained_ogre",
+      "payload": {
+        "text": "chained_ogre"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.521436+00:00",
+      "source": "manual",
+      "node_id": "gyoubu_oniwa",
+      "payload": {
+        "text": "gyoubu_oniwa"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.538214+00:00",
+      "source": "manual",
+      "node_id": "hirata_estate",
+      "payload": {
+        "text": "hirata_estate"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.561284+00:00",
+      "source": "manual",
+      "node_id": "juzou_the_drunkard",
+      "payload": {
+        "text": "juzou_the_drunkard"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.583630+00:00",
+      "source": "manual",
+      "node_id": "lady_butterfly",
+      "payload": {
+        "text": "lady_butterfly"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.606361+00:00",
+      "source": "manual",
+      "node_id": "ashina_castle",
+      "payload": {
+        "text": "ashina_castle"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.628947+00:00",
+      "source": "manual",
+      "node_id": "blazing_bull",
+      "payload": {
+        "text": "blazing_bull"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.649944+00:00",
+      "source": "manual",
+      "node_id": "genichiro_ashina",
+      "payload": {
+        "text": "genichiro_ashina"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.673129+00:00",
+      "source": "manual",
+      "node_id": "mushin_arts",
+      "payload": {
+        "text": "mushin_arts"
+      }
+    }
+  ],
+  "synthesis_cache": null
+}

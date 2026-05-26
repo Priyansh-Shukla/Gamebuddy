@@ -1,0 +1,106 @@
+# Sekiro envelope @ early checkpoint
+# observed=6 frontier=3 gated=40
+# entities in envelope: 8
+# observations: 6
+# --- prompt body below this line ---
+
+Game: Sekiro: Shadows Die Twice (sekiro)
+
+<game_overview>
+Sekiro: Shadows Die Twice is a 2019 action-adventure game by FromSoftware, set in a reimagined Sengoku-era Japan circa 1500s. The player controls Wolf, a one-armed shinobi sworn to protect a young lord named Kuro, the "Divine Heir" whose immortal Dragon's Heritage is coveted by the warring Ashina clan and the encroaching Interior Ministry. After a prologue ambush in which the antagonist Genichiro Ashina abducts Kuro and severs Wolf's arm, the protagonist is resurrected and outfitted with a Shinobi Prosthetic by an enigmatic Sculptor at the Dilapidated Temple, which becomes the central hub.
+
+Unlike previous FromSoftware titles, Sekiro emphasizes deflection-based swordplay and posture management over stat-based RPG progression. Combat revolves around breaking an enemy's Posture meter through aggressive parries and counters rather than whittling down health. Stealth, verticality (via a grappling hook), and a rotating roster of Prosthetic Tools (Flame Vent, Loaded Axe, Shuriken, Mist Raven, and others) are central to traversal and crowd control. The player's central resource for permanent advancement is Skill Points (spent on combat arts and passive nodes), Prayer Beads (four combine into a Prayer Necklace that raises Vitality and Posture), and Gourd Seeds (which expand Healing Gourd capacity).
+
+The world is a loosely interconnected network of regions radiating outward from Ashina Castle: the entry road of Ashina Outskirts, the optional childhood memory of Hirata Estate, the snowbound monastery of Senpou Temple atop Mt. Kongo, the chasm-spanning Sunken Valley, the swampbound Ashina Depths and Mibu Village, and the otherworldly Fountainhead Palace. Late in the game a single choice on the Castle rooftop branches the story decisively, locking the player into one of four endings (Shura, Immortal Severance, Purification, or Return) and gating which final bosses they will face. Progression is largely non-linear after the first major boss, but a recommended order — Senpou, then Sunken Valley, then Ashina Depths — minimizes locked-out content.
+
+GameBuddy treats Sekiro as the v1 reference title because the developer is on a second playthrough with full spoiler tolerance: this game-context package is the canonical testbed for envelope filtering, gate semantics, and synthesis quality before extending to titles where the player has not yet seen the ending.
+</game_overview>
+
+<effective_observed>
+ashina_outskirts, chained_ogre, kusabimaru, lose_arm, prologue_genichiro, shinobi_prosthetic
+</effective_observed>
+
+<game_context>
+The following entries are the entire scope of game content available to you.
+Do not introduce facts not present in these entries.
+<entity node_id="ashina_outskirts" type="area">
+Ashina Outskirts is the first proper play area of the game, accessed from the Dilapidated Temple. It is a winding road of cliffside villages, abandoned checkpoints, and bombed-out fortifications that climbs from the valley floor up to the great gate of Ashina Castle. The Ministry's siege has begun in earnest: most of the soldiers patrolling the road wear the broad straw hats and red sashes of Ashina troops, but artillery, scattered corpses, and burned wagons make it clear the defense has been overrun in places.
+
+The area teaches the core combat lessons. Outlying samurai and ashigaru drill the player on deflection timing. A nameless Tutorial-grade samurai near the first idol explains the Mikiri Counter, which is mandatory for surviving thrust attacks throughout the game. The road also contains two scripted ambush points — the Chained Ogre cliff and the General Naomori Kawarada camp — that gate progress and reward the player with the first Prayer Beads of the run.
+
+Beyond its tutorial function, Ashina Outskirts is a recurring location: the player will return here in the late game (under different conditions and lighting) for the Demon of Hatred encounter if they pursue a non-Shura ending. The peasant NPC near the first idol, Inosuke's mother, gives the player the Young Lord's Bell Charm after a brief side conversation; this charm, offered at the Dilapidated Temple's Buddha, unlocks the optional Hirata Estate memory.
+
+Trivia: the area's musical motif, a low, mournful biwa line, recurs in modified form in nearly every Ashina-affiliated area of the game and is one of the most consistent through-lines in composer Yuka Kitamura's score.
+</entity>
+<entity node_id="chained_ogre" type="boss">
+The Chained Ogre is a mini-boss encountered partway up the road of Ashina Outskirts, restrained at the top of a stone staircase by two priests holding spiked rods to his neck. Killing the priests first is the recommended approach: doing so lets the player skip his throw-heavy opening phase by initiating a stealth Deathblow on him while he is still pinned.
+
+The fight itself is a brutal stamina test for new players. The Ogre cannot be staggered by normal sword swings, has no perilous-thrust attacks that can be Mikiri'd, and his grab attacks ignore deflection entirely. Backing off and circling is the standard response to his grab tells (he raises both hands overhead, or lunges forward with arms wide). The single most important fact about the fight is that the Ogre is afraid of fire: the Flame Vent prosthetic, obtained as a base item in Hirata Estate, makes him flinch for several seconds per application, opening huge punish windows. Players who attempt the fight without fire usually find it dramatically harder.
+
+Defeating the Chained Ogre yields the Shinobi Medicine Rank 1 skill (improving healing potency) and a Prayer Bead. He is also the first enemy in the game that visibly teaches players a key Sekiro lesson: not every fight is won by deflection, and reading enemy attack types — perilous symbol, grab, sweep, thrust — matters as much as timing.
+
+Trivia: the red eyes the Ogre exhibits are an early visual cue for a type of enchantment that recurs throughout the game; several other enemies share the same red-eye affliction and the same fear of fire.
+</entity>
+<entity node_id="gyoubu_oniwa" type="boss">
+Gyoubu Masataka Oniwa is the first true main boss of Sekiro and is the gatekeeper between Ashina Outskirts and Ashina Castle. The fight takes place on a wide, flat field in front of the castle's gate — a deliberate change of arena scale from the cramped duels that precede it. Gyoubu fights mounted on a black horse, charges with a long spear, and announces himself with a famous shouted introduction that has become one of the most quoted lines in the game.
+
+The fight is the game's introduction to large-arena combat. Gyoubu's primary attacks are charges with a hooked spear; his perilous thrust is reliably defeated by the Mikiri Counter, which is the single most reinforced lesson of the early game. His other major opener — a horizontal sweep from horseback — must be jumped, not deflected. Players who internalize "thrust = Mikiri, sweep = jump, everything else = deflect" usually beat Gyoubu cleanly; players who try to roll out of attacks the way they would in a Souls game struggle.
+
+Defeating Gyoubu yields his Memory (raising Attack Power) and the prosthetic upgrade material that, paired with the Mechanical Barrel found in his arena, unlocks the Loaded Spear at the Sculptor. He is the first scripted unlock point in the linear-feeling opening hours and serves as the structural divider between the tutorial-grade Outskirts content and the more open mid-game.
+
+Trivia: Gyoubu was historically a real Sengoku-era commander serving under the Hojo clan, and his appearance in the game is a reference to that lineage; the "naginata-on-horseback" silhouette is borrowed from period scrolls depicting Hojo cavalry.
+</entity>
+<entity node_id="headless" type="boss">
+The Headless are recurring apparition-type mini-bosses scattered through the world in dim caves, underwater pools, and other liminal spaces. The first Headless is encountered in a cave near a stream off the main path of Ashina Outskirts, behind a misty veil. They are tall, gaunt, decapitated samurai who fight in slow motion, surrounded by a Terror aura that drains Wolf's posture and eventually instakills him if the Terror meter fills.
+
+A Headless fight is fundamentally about preparation rather than mechanics. The Divine Confetti consumable temporarily lets Wolf damage apparition-type enemies properly; without it his hits do almost nothing. The Pacifying Agent consumable slows Terror buildup, which is the difference between a winnable fight and a frantic Terror-death. The Headless's signature move — a slow, telegraphed underhand grab from a kneeling stance — is jumpable but very punishing if missed.
+
+Defeating each Headless yields a Spiritfall consumable (Ako's Spiritfall, Ungo's Spiritfall, and variants), which functions like a temporary buff for combat or healing. They are the optional reward-engine of the game's apparition tier and are generally considered some of the most patience-testing fights in Sekiro.
+
+Trivia: the Headless's gait and posture closely mirror traditional Noh theater stage movement, particularly the slow-stepping shite of a vengeful-ghost play.
+</entity>
+<entity node_id="kusabimaru" type="item">
+Kusabimaru is Wolf's katana and his only sword for the entire game — Sekiro has no weapon-swapping system the way other FromSoftware titles do. The blade was a gift from Kuro and is recovered by Wolf at the Dilapidated Temple after the prologue. Its name translates roughly to "wedge" or "linchpin," reflecting Kuro's intent that it bind Wolf to his service.
+
+Mechanically, the sword's damage is fixed; it cannot be upgraded with materials in the way prosthetic tools can. Instead, Wolf's offensive power scales through Attack Power, a stat raised by defeating major bosses and consuming the Memories they leave behind. Posture damage — the more important meter in most fights — scales with both Attack Power and aggressive offense, but is dealt primarily through deflection, which costs nothing.
+
+The blade is more than a stat stick. Several Combat Arts (Mortal Draw, One Mind, Floating Passage, Ashina Cross) are sword techniques layered on top of Kusabimaru, and the late-game Mortal Blade exists alongside it rather than replacing it. The fact that the player carries the same blade from the first hour to the final boss is part of the game's design ethos: mastery, not equipment, is the progression curve.
+</entity>
+<entity node_id="lose_arm" type="story_beat">
+At the conclusion of the prologue, Genichiro severs Wolf's left arm at the elbow and leaves him for dead. Wolf regains consciousness in the Dilapidated Temple, a half-ruined sanctuary on a hillside outside Ashina Castle. He is now fitted with a strange wooden left arm — the Shinobi Prosthetic — by the Sculptor, a one-armed monk who maintains a workshop full of Buddha carvings inside the temple. Emma, a doctor in service to the Ashina clan, is also present and explains that Wolf has been brought back by the power of the Dragon's Heritage flowing through his pledged bond with Kuro: the Resurrection mechanic the player will use throughout the game.
+
+The Dilapidated Temple becomes the central hub for the rest of the game. The Sculptor fits and upgrades Prosthetic Tools when Wolf returns with base items and upgrade materials. Emma provides medicinal upgrades and gradually opens up dialogue branches that hint at the player's options later in the story. Both the temple's Buddha Idol and every other Sculptor's Idol in the world serve as the game's checkpoint system — sitting at an idol restores Wolf's Healing Gourd charges but respawns most non-boss enemies.
+
+This beat also introduces the game's core economy: Skill Points (spent on Combat Arts and passive nodes), Sen (currency), Prayer Beads (four make a Prayer Necklace, which raises Vitality and Posture), and Gourd Seeds (given to Emma to expand Healing Gourd uses). All of these are persistent across deaths, with caveats: dying without resurrecting drops half of your unspent XP and Sen, but Unseen Aid sometimes cancels that loss.
+</entity>
+<entity node_id="prologue_genichiro" type="story_beat">
+The opening sequence places Wolf — the player character, a shinobi sworn to the Divine Heir Kuro — at the bottom of a dry well in Ashina territory. After a brief tutorial pursuing intruders through a moonlit garden, Wolf reaches the upper floor of the tower where Kuro is held captive. The encounter with Genichiro Ashina that follows is the game's first scripted boss fight and is unwinnable on a first attempt; it functions primarily as a cinematic establishment of the antagonist's skill and the protagonist's place in the world.
+
+Genichiro is presented as a master swordsman and bowman, grandson and adopted heir to Isshin Ashina, head of the failing Ashina clan. His pursuit of Kuro is motivated by the legend of the Dragon's Heritage, an immortality-conferring lineage that Kuro carries and which Genichiro believes can save his dying province from the encroaching Interior Ministry. The prologue establishes that the player will be expected to lose fights and learn from them, that posture and deflection matter more than running away, and that the central narrative tension is the tug-of-war over Kuro.
+
+Trivia: the falling-action shot of the prologue — Wolf plummeting from the tower as Genichiro stands over Kuro — was used heavily in the game's pre-release marketing and is the first time the title's tagline "Shadows Die Twice" is contextualized, foreshadowing the Resurrection mechanic that follows.
+</entity>
+<entity node_id="shinobi_prosthetic" type="item">
+The Shinobi Prosthetic is the wooden left arm that the Sculptor fits to Wolf after the prologue. It functions as a permanent equipment slot rather than a consumable, and it is the slot into which all Prosthetic Tools — Shuriken Wheel, Flame Vent, Loaded Axe, Loaded Spear, Loaded Umbrella, Mist Raven, Sabimaru, Divine Abduction, Finger Whistle, and others — are installed.
+
+At any given time the prosthetic can hold three equipped tools, cycled with a single button. Tools are powered by Spirit Emblems, a consumable currency dropped by enemies and purchasable from merchants; each tool consumes one or more emblems per use. The prosthetic also enables the grappling hook, which dramatically changes traversal: any green hook icon in the world is a grapple point, and chains of grapples form the backbone of mid- and late-game vertical level design.
+
+Tools are not just utility — many are situational counters. The Flame Vent applies Burn to fire-vulnerable enemies, the Loaded Axe breaks shield guards and high-posture stances, and Divine Abduction can spin enemies around to expose their backs for a Deathblow. The prosthetic is the single biggest expression of player loadout choice in Sekiro; experimentation with the three-slot rotation per area is the main form of build optimization.
+</entity>
+</game_context>
+
+<player_observations>
+- 2026-05-26T16:13:15.386053+00:00 source=manual node=prologue_genichiro text='prologue_genichiro'
+- 2026-05-26T16:13:15.404111+00:00 source=manual node=lose_arm text='lose_arm'
+- 2026-05-26T16:13:15.427496+00:00 source=manual node=kusabimaru text='kusabimaru'
+- 2026-05-26T16:13:15.449678+00:00 source=manual node=shinobi_prosthetic text='shinobi_prosthetic'
+- 2026-05-26T16:13:15.472367+00:00 source=manual node=ashina_outskirts text='ashina_outskirts'
+- 2026-05-26T16:13:15.495181+00:00 source=manual node=chained_ogre text='chained_ogre'
+</player_observations>
+
+<instructions>
+Call the return_summary tool with the briefing.
+- Ground every claim in the entries above.
+- Set next_boss to null if the player is too early or no boss content is in scope.
+- Set completion to null when no progress signal implies scope (blind runs).
+</instructions>

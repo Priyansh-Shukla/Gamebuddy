@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "game_id": "sekiro",
+  "last_synced": "2026-05-26T16:13:15.991516+00:00",
+  "boundary": {
+    "observed": [
+      "armored_warrior",
+      "ashina_castle",
+      "ashina_depths",
+      "ashina_outskirts",
+      "blazing_bull",
+      "chained_ogre",
+      "corrupted_monk",
+      "divine_dragon",
+      "folding_screen_monkeys",
+      "fountainhead_palace",
+      "genichiro_ashina",
+      "gyoubu_oniwa",
+      "hirata_estate",
+      "juzou_the_drunkard",
+      "kusabimaru",
+      "lady_butterfly",
+      "long_arm_centipede_giraffe",
+      "lose_arm",
+      "mibu_village",
+      "mortal_blade",
+      "mushin_arts",
+      "owl_iron_code_choice",
+      "prologue_genichiro",
+      "senpou_temple",
+      "shinobi_prosthetic",
+      "snake_eyes_shirahagi",
+      "sunken_valley",
+      "true_corrupted_monk"
+    ],
+    "declared": null
+  },
+  "observations": [
+    {
+      "timestamp": "2026-05-26T16:13:15.386053+00:00",
+      "source": "manual",
+      "node_id": "prologue_genichiro",
+      "payload": {
+        "text": "prologue_genichiro"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.404111+00:00",
+      "source": "manual",
+      "node_id": "lose_arm",
+      "payload": {
+        "text": "lose_arm"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.427496+00:00",
+      "source": "manual",
+      "node_id": "kusabimaru",
+      "payload": {
+        "text": "kusabimaru"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.449678+00:00",
+      "source": "manual",
+      "node_id": "shinobi_prosthetic",
+      "payload": {
+        "text": "shinobi_prosthetic"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.472367+00:00",
+      "source": "manual",
+      "node_id": "ashina_outskirts",
+      "payload": {
+        "text": "ashina_outskirts"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.495181+00:00",
+      "source": "manual",
+      "node_id": "chained_ogre",
+      "payload": {
+        "text": "chained_ogre"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.521436+00:00",
+      "source": "manual",
+      "node_id": "gyoubu_oniwa",
+      "payload": {
+        "text": "gyoubu_oniwa"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.538214+00:00",
+      "source": "manual",
+      "node_id": "hirata_estate",
+      "payload": {
+        "text": "hirata_estate"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.561284+00:00",
+      "source": "manual",
+      "node_id": "juzou_the_drunkard",
+      "payload": {
+        "text": "juzou_the_drunkard"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.583630+00:00",
+      "source": "manual",
+      "node_id": "lady_butterfly",
+      "payload": {
+        "text": "lady_butterfly"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.606361+00:00",
+      "source": "manual",
+      "node_id": "ashina_castle",
+      "payload": {
+        "text": "ashina_castle"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.628947+00:00",
+      "source": "manual",
+      "node_id": "blazing_bull",
+      "payload": {
+        "text": "blazing_bull"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.649944+00:00",
+      "source": "manual",
+      "node_id": "genichiro_ashina",
+      "payload": {
+        "text": "genichiro_ashina"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.673129+00:00",
+      "source": "manual",
+      "node_id": "mushin_arts",
+      "payload": {
+        "text": "mushin_arts"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.701277+00:00",
+      "source": "manual",
+      "node_id": "senpou_temple",
+      "payload": {
+        "text": "senpou_temple"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.719534+00:00",
+      "source": "manual",
+      "node_id": "armored_warrior",
+      "payload": {
+        "text": "armored_warrior"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.742295+00:00",
+      "source": "manual",
+      "node_id": "folding_screen_monkeys",
+      "payload": {
+        "text": "folding_screen_monkeys"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.764447+00:00",
+      "source": "manual",
+      "node_id": "mortal_blade",
+      "payload": {
+        "text": "mortal_blade"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.787611+00:00",
+      "source": "manual",
+      "node_id": "sunken_valley",
+      "payload": {
+        "text": "sunken_valley"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.811094+00:00",
+      "source": "manual",
+      "node_id": "snake_eyes_shirahagi",
+      "payload": {
+        "text": "snake_eyes_shirahagi"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.834426+00:00",
+      "source": "manual",
+      "node_id": "long_arm_centipede_giraffe",
+      "payload": {
+        "text": "long_arm_centipede_giraffe"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.856111+00:00",
+      "source": "manual",
+      "node_id": "ashina_depths",
+      "payload": {
+        "text": "ashina_depths"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.878897+00:00",
+      "source": "manual",
+      "node_id": "mibu_village",
+      "payload": {
+        "text": "mibu_village"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.900866+00:00",
+      "source": "manual",
+      "node_id": "corrupted_monk",
+      "payload": {
+        "text": "corrupted_monk"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.922788+00:00",
+      "source": "manual",
+      "node_id": "fountainhead_palace",
+      "payload": {
+        "text": "fountainhead_palace"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.945715+00:00",
+      "source": "manual",
+      "node_id": "true_corrupted_monk",
+      "payload": {
+        "text": "true_corrupted_monk"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.967407+00:00",
+      "source": "manual",
+      "node_id": "divine_dragon",
+      "payload": {
+        "text": "divine_dragon"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.991516+00:00",
+      "source": "manual",
+      "node_id": "owl_iron_code_choice",
+      "payload": {
+        "text": "owl_iron_code_choice"
+      }
+    }
+  ],
+  "synthesis_cache": null
+}

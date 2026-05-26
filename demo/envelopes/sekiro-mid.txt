@@ -1,0 +1,177 @@
+# Sekiro envelope @ mid checkpoint
+# observed=14 frontier=5 gated=30
+# entities in envelope: 15
+# observations: 14
+# --- prompt body below this line ---
+
+Game: Sekiro: Shadows Die Twice (sekiro)
+
+<game_overview>
+Sekiro: Shadows Die Twice is a 2019 action-adventure game by FromSoftware, set in a reimagined Sengoku-era Japan circa 1500s. The player controls Wolf, a one-armed shinobi sworn to protect a young lord named Kuro, the "Divine Heir" whose immortal Dragon's Heritage is coveted by the warring Ashina clan and the encroaching Interior Ministry. After a prologue ambush in which the antagonist Genichiro Ashina abducts Kuro and severs Wolf's arm, the protagonist is resurrected and outfitted with a Shinobi Prosthetic by an enigmatic Sculptor at the Dilapidated Temple, which becomes the central hub.
+
+Unlike previous FromSoftware titles, Sekiro emphasizes deflection-based swordplay and posture management over stat-based RPG progression. Combat revolves around breaking an enemy's Posture meter through aggressive parries and counters rather than whittling down health. Stealth, verticality (via a grappling hook), and a rotating roster of Prosthetic Tools (Flame Vent, Loaded Axe, Shuriken, Mist Raven, and others) are central to traversal and crowd control. The player's central resource for permanent advancement is Skill Points (spent on combat arts and passive nodes), Prayer Beads (four combine into a Prayer Necklace that raises Vitality and Posture), and Gourd Seeds (which expand Healing Gourd capacity).
+
+The world is a loosely interconnected network of regions radiating outward from Ashina Castle: the entry road of Ashina Outskirts, the optional childhood memory of Hirata Estate, the snowbound monastery of Senpou Temple atop Mt. Kongo, the chasm-spanning Sunken Valley, the swampbound Ashina Depths and Mibu Village, and the otherworldly Fountainhead Palace. Late in the game a single choice on the Castle rooftop branches the story decisively, locking the player into one of four endings (Shura, Immortal Severance, Purification, or Return) and gating which final bosses they will face. Progression is largely non-linear after the first major boss, but a recommended order — Senpou, then Sunken Valley, then Ashina Depths — minimizes locked-out content.
+
+GameBuddy treats Sekiro as the v1 reference title because the developer is on a second playthrough with full spoiler tolerance: this game-context package is the canonical testbed for envelope filtering, gate semantics, and synthesis quality before extending to titles where the player has not yet seen the ending.
+</game_overview>
+
+<effective_observed>
+ashina_castle, ashina_outskirts, blazing_bull, chained_ogre, genichiro_ashina, gyoubu_oniwa, hirata_estate, juzou_the_drunkard, kusabimaru, lady_butterfly, lose_arm, mushin_arts, prologue_genichiro, shinobi_prosthetic
+</effective_observed>
+
+<game_context>
+The following entries are the entire scope of game content available to you.
+Do not introduce facts not present in these entries.
+<entity node_id="ashina_castle" type="area">
+Ashina Castle is the central hub area of the mid-game, accessed through the great gate after the death of Gyoubu Oniwa. It is a vertical fortress of tiled rooftops, sloped courtyards, and lantern-lined corridors built into the side of a mountain. The castle introduces the first stretch of the game where verticality and grapple traversal genuinely matter — much of it is navigated by hooking between rooftops, dropping into open windows, and stealth-Deathblowing patrolling samurai from above.
+
+Mechanically, the castle is dense with content. It contains multiple Sculptor's Idols, a number of patrolling mini-bosses (most notably the Blazing Bull on the lower courtyard and a samurai general at the main entrance), several merchants, and several pivotal NPCs. The Tengu of Ashina appears on a rooftop and offers a "rat-hunting" side quest that unlocks the Ashina Arts skill tree. Kuro is held in the topmost tower of the castle and is the player's main objective.
+
+The castle is also the structural fulcrum of the entire game. After defeating Genichiro on its rooftop, three previously inaccessible regions open simultaneously: Senpou Temple (via a kite-zipline from a nearby tower), Sunken Valley (via a tunnel beneath the castle), and Ashina Depths (via an underground passage in the Abandoned Dungeon). The player will also return to the castle a third time, much later, with all idols grayed out and the keep in flames, for the late-game finale.
+
+Trivia: the architecture of Ashina Castle is closely modeled on Matsumoto Castle in Nagano, including the distinctive black exterior, the steep stone foundation, and the multi-tier hip-and-gable roof line.
+</entity>
+<entity node_id="ashina_outskirts" type="area">
+Ashina Outskirts is the first proper play area of the game, accessed from the Dilapidated Temple. It is a winding road of cliffside villages, abandoned checkpoints, and bombed-out fortifications that climbs from the valley floor up to the great gate of Ashina Castle. The Ministry's siege has begun in earnest: most of the soldiers patrolling the road wear the broad straw hats and red sashes of Ashina troops, but artillery, scattered corpses, and burned wagons make it clear the defense has been overrun in places.
+
+The area teaches the core combat lessons. Outlying samurai and ashigaru drill the player on deflection timing. A nameless Tutorial-grade samurai near the first idol explains the Mikiri Counter, which is mandatory for surviving thrust attacks throughout the game. The road also contains two scripted ambush points — the Chained Ogre cliff and the General Naomori Kawarada camp — that gate progress and reward the player with the first Prayer Beads of the run.
+
+Beyond its tutorial function, Ashina Outskirts is a recurring location: the player will return here in the late game (under different conditions and lighting) for the Demon of Hatred encounter if they pursue a non-Shura ending. The peasant NPC near the first idol, Inosuke's mother, gives the player the Young Lord's Bell Charm after a brief side conversation; this charm, offered at the Dilapidated Temple's Buddha, unlocks the optional Hirata Estate memory.
+
+Trivia: the area's musical motif, a low, mournful biwa line, recurs in modified form in nearly every Ashina-affiliated area of the game and is one of the most consistent through-lines in composer Yuka Kitamura's score.
+</entity>
+<entity node_id="blazing_bull" type="boss">
+The Blazing Bull is a mini-boss encountered in the lower courtyard of Ashina Castle, immediately after entering the area through the main gate. It is a massive bull with a flaming bundle of straw and metal lashed to its horns, kept in a fenced training pen by Ashina handlers. Its entire moveset is built around unpredictable horizontal charges that span the length of the arena.
+
+The fight is one of the most-discussed early walls in the game, primarily because it doesn't reward the deflection-focused approach that the rest of the game has been teaching. The bull's charges cannot be parried; instead the player has to circle behind it after each charge ends, land two or three quick hits, and disengage before the next charge starts. Firecrackers — a Prosthetic Tool whose base item is found in the area — stagger the bull for several seconds per use, dramatically shortening the fight. Players who try to stand and trade with it typically die in seconds.
+
+Defeating the Blazing Bull yields a Prayer Bead and Shinobi Medicine Rank 2. Beyond the rewards, the fight is one of the game's clearest demonstrations that not every encounter is a sword duel and that the Prosthetic Tool roster is meant to be used aggressively, not hoarded.
+
+Trivia: the bull's silhouette and behavior are a reference to the legendary "fire ox" tactic attributed to Tian Dan during the Warring States of ancient China, in which oxen with flaming horns were sent to break enemy lines — adapted here into Sengoku-era visual idiom.
+</entity>
+<entity node_id="chained_ogre" type="boss">
+The Chained Ogre is a mini-boss encountered partway up the road of Ashina Outskirts, restrained at the top of a stone staircase by two priests holding spiked rods to his neck. Killing the priests first is the recommended approach: doing so lets the player skip his throw-heavy opening phase by initiating a stealth Deathblow on him while he is still pinned.
+
+The fight itself is a brutal stamina test for new players. The Ogre cannot be staggered by normal sword swings, has no perilous-thrust attacks that can be Mikiri'd, and his grab attacks ignore deflection entirely. Backing off and circling is the standard response to his grab tells (he raises both hands overhead, or lunges forward with arms wide). The single most important fact about the fight is that the Ogre is afraid of fire: the Flame Vent prosthetic, obtained as a base item in Hirata Estate, makes him flinch for several seconds per application, opening huge punish windows. Players who attempt the fight without fire usually find it dramatically harder.
+
+Defeating the Chained Ogre yields the Shinobi Medicine Rank 1 skill (improving healing potency) and a Prayer Bead. He is also the first enemy in the game that visibly teaches players a key Sekiro lesson: not every fight is won by deflection, and reading enemy attack types — perilous symbol, grab, sweep, thrust — matters as much as timing.
+
+Trivia: the red eyes the Ogre exhibits are an early visual cue for a type of enchantment that recurs throughout the game; several other enemies share the same red-eye affliction and the same fear of fire.
+</entity>
+<entity node_id="genichiro_ashina" type="boss">
+Genichiro Ashina is the structural midpoint of Sekiro and is widely treated as the game's "skill check." He is fought on the rooftop of Ashina Castle's central keep, in a wide arena under heavy clouds, and the encounter is the first full duel against a humanoid swordsman with the player's full kit.
+
+The fight has three phases. The first is bow-and-blade swordplay with reliable deflection windows and clear perilous tells (a high sweep, a thrust that demands Mikiri Counter, and a famous jumping-bow shot that can be deflected back at him with the right timing). The second phase introduces a longer combo string and the iconic lightning-reversal mechanic: Genichiro periodically jumps into the air, calls down lightning, and the player must jump as he strikes, then attack while airborne to redirect the bolt and stagger him for a free Deathblow. The third phase — "Way of Tomoe" — gives him red glowing strikes and Tomoe Bow attacks that combine lightning with pressure; it is brutally fast but mechanically the same fight at a higher tempo.
+
+Defeating Genichiro is the structural pivot point of the entire game. It yields his Memory (a major Attack Power increase), unlocks the Mushin Arts skill tree, and opens the three mid-game regions: Senpou Temple to the north, Sunken Valley to the west, and Ashina Depths beneath the castle. Players who beat Genichiro generally consider the rest of the game's mechanics to be in their hands; the fights that follow are dangerous, but they all reuse skills first asked for here.
+
+Trivia: Genichiro's lightning-reversal mechanic is foreshadowed earlier in the game by a Sculptor's Idol dialogue and a dropped scroll, both of which describe the Lightning of Tomoe technique. He is not the final time the player will see him.
+</entity>
+<entity node_id="gyoubu_oniwa" type="boss">
+Gyoubu Masataka Oniwa is the first true main boss of Sekiro and is the gatekeeper between Ashina Outskirts and Ashina Castle. The fight takes place on a wide, flat field in front of the castle's gate — a deliberate change of arena scale from the cramped duels that precede it. Gyoubu fights mounted on a black horse, charges with a long spear, and announces himself with a famous shouted introduction that has become one of the most quoted lines in the game.
+
+The fight is the game's introduction to large-arena combat. Gyoubu's primary attacks are charges with a hooked spear; his perilous thrust is reliably defeated by the Mikiri Counter, which is the single most reinforced lesson of the early game. His other major opener — a horizontal sweep from horseback — must be jumped, not deflected. Players who internalize "thrust = Mikiri, sweep = jump, everything else = deflect" usually beat Gyoubu cleanly; players who try to roll out of attacks the way they would in a Souls game struggle.
+
+Defeating Gyoubu yields his Memory (raising Attack Power) and the prosthetic upgrade material that, paired with the Mechanical Barrel found in his arena, unlocks the Loaded Spear at the Sculptor. He is the first scripted unlock point in the linear-feeling opening hours and serves as the structural divider between the tutorial-grade Outskirts content and the more open mid-game.
+
+Trivia: Gyoubu was historically a real Sengoku-era commander serving under the Hojo clan, and his appearance in the game is a reference to that lineage; the "naginata-on-horseback" silhouette is borrowed from period scrolls depicting Hojo cavalry.
+</entity>
+<entity node_id="headless" type="boss">
+The Headless are recurring apparition-type mini-bosses scattered through the world in dim caves, underwater pools, and other liminal spaces. The first Headless is encountered in a cave near a stream off the main path of Ashina Outskirts, behind a misty veil. They are tall, gaunt, decapitated samurai who fight in slow motion, surrounded by a Terror aura that drains Wolf's posture and eventually instakills him if the Terror meter fills.
+
+A Headless fight is fundamentally about preparation rather than mechanics. The Divine Confetti consumable temporarily lets Wolf damage apparition-type enemies properly; without it his hits do almost nothing. The Pacifying Agent consumable slows Terror buildup, which is the difference between a winnable fight and a frantic Terror-death. The Headless's signature move — a slow, telegraphed underhand grab from a kneeling stance — is jumpable but very punishing if missed.
+
+Defeating each Headless yields a Spiritfall consumable (Ako's Spiritfall, Ungo's Spiritfall, and variants), which functions like a temporary buff for combat or healing. They are the optional reward-engine of the game's apparition tier and are generally considered some of the most patience-testing fights in Sekiro.
+
+Trivia: the Headless's gait and posture closely mirror traditional Noh theater stage movement, particularly the slow-stepping shite of a vengeful-ghost play.
+</entity>
+<entity node_id="hirata_estate" type="area">
+Hirata Estate is the first memory area of Sekiro — a flashback location accessed by offering the Young Lord's Bell Charm to the Buddha statue inside the Dilapidated Temple. The memory takes place years before the main game, during a night raid on the Hirata clan's mountain estate by the bandits of Juzou the Drunkard, and Wolf revisits the night as a one-armed shinobi remembering events when he still had both arms.
+
+Visually and structurally, Hirata is a tight stealth playground: pine forests on fire, a torchlit village, a riverside path with thatched-roof buildings, and a serene lord's residence at the back containing a hidden temple beneath. Audio cues — distant shouts, crackling flame, an isolated biwa motif — set it apart from the daylit Ashina exterior. The area introduces several systems: large groups of enemies that reward stealth-chain Deathblows, fire-element environmental hazards, and the first sustained set of NPCs with backstory dialogue.
+
+Hirata is technically optional. A player can complete the entire main story without ever offering the Young Lord's Bell Charm. Skipping it, however, locks out the Flame Vent prosthetic base item (a crucial counter to the Chained Ogre and several other red-eyed enemies), the Shuriken Wheel upgrade material, two Prayer Beads, and the Sakura Droplet healing item. For these reasons it is universally recommended as the first detour after Ashina Outskirts.
+
+Trivia: the Hirata clan and its young lord are the in-universe origin of Wolf's first oath of service; this memory is the canonical introduction of the character whom Kuro's storyline ultimately mirrors.
+</entity>
+<entity node_id="juzou_the_drunkard" type="boss">
+Juzou the Drunkard is a mini-boss encountered in a torchlit courtyard partway through Hirata Estate, surrounded by roughly a dozen bandit retainers. He is enormous — easily twice Wolf's height — wields a wide-bladed cleaver, and inflicts Poison buildup with a gourd of putrid alcohol that he periodically slings outward in an arc.
+
+The fight is balanced around the assumption that the player will not engage Juzou alone. A samurai NPC named Nogami Gensai stands at the gate to the courtyard, and ringing his bell (or speaking to him) enlists him as a temporary ally who will draw the bandits' attention and tank some of Juzou's aggression. Without the ally, the fight becomes a chaotic ten-on-one in which Poison stacking is almost guaranteed to drop Wolf before posture damage can land. With the ally and aggressive stealth on the surrounding bandits beforehand, the fight is a clean two-Deathblow duel.
+
+Defeating Juzou yields a Prayer Bead and the Bite Down consumable. He is also the structural gate to the inner courtyard where the path forks toward Lady Butterfly's hidden temple.
+
+Trivia: Juzou's bandit crew are the canonical raiders responsible for burning Hirata Estate the night of the memory, and his presence inside it is the in-universe reason the estate falls.
+</entity>
+<entity node_id="kusabimaru" type="item">
+Kusabimaru is Wolf's katana and his only sword for the entire game — Sekiro has no weapon-swapping system the way other FromSoftware titles do. The blade was a gift from Kuro and is recovered by Wolf at the Dilapidated Temple after the prologue. Its name translates roughly to "wedge" or "linchpin," reflecting Kuro's intent that it bind Wolf to his service.
+
+Mechanically, the sword's damage is fixed; it cannot be upgraded with materials in the way prosthetic tools can. Instead, Wolf's offensive power scales through Attack Power, a stat raised by defeating major bosses and consuming the Memories they leave behind. Posture damage — the more important meter in most fights — scales with both Attack Power and aggressive offense, but is dealt primarily through deflection, which costs nothing.
+
+The blade is more than a stat stick. Several Combat Arts (Mortal Draw, One Mind, Floating Passage, Ashina Cross) are sword techniques layered on top of Kusabimaru, and the late-game Mortal Blade exists alongside it rather than replacing it. The fact that the player carries the same blade from the first hour to the final boss is part of the game's design ethos: mastery, not equipment, is the progression curve.
+</entity>
+<entity node_id="lady_butterfly" type="boss">
+Lady Butterfly is the first major optional boss of the game, fought in a hidden temple beneath the lord's residence in Hirata Estate. She is an aged kunoichi who fights in flowing white robes, leaps between hanging streamers in the rafters, and uses an illusion-based moveset built around purple butterfly projectiles and shadow clones.
+
+The fight is two phases. Phase one focuses on aerial leaps, a slow kunai-throw spread, and a perilous ground-slam thrust that must be Mikiri'd. Phase two introduces Illusory Butterflies — a swarm of homing damage spheres — and her Shadow Clone follow-up after she dies the first time, where she rises again wreathed in butterflies and adds an instakill grab to her repertoire. The Whistling Prosthetic Tool's analog and Snap Seeds (consumables that cancel illusions) trivialize the Shadow Clone phase if used at the right moment, which is one of the game's earliest demonstrations of prosthetic specialization mattering.
+
+Defeating Lady Butterfly yields her Memory (Attack Power), the Sakura Droplet (a permanent expansion of Resurrection charges — among the most valuable single items in the game), and dialogue from the Sculptor afterward that significantly fleshes out his backstory and his relationship to the player character.
+
+Trivia: Lady Butterfly was Wolf's shinobi teacher in his pre-game backstory, and her death in the memory is the canonical end of his apprenticeship.
+</entity>
+<entity node_id="lose_arm" type="story_beat">
+At the conclusion of the prologue, Genichiro severs Wolf's left arm at the elbow and leaves him for dead. Wolf regains consciousness in the Dilapidated Temple, a half-ruined sanctuary on a hillside outside Ashina Castle. He is now fitted with a strange wooden left arm — the Shinobi Prosthetic — by the Sculptor, a one-armed monk who maintains a workshop full of Buddha carvings inside the temple. Emma, a doctor in service to the Ashina clan, is also present and explains that Wolf has been brought back by the power of the Dragon's Heritage flowing through his pledged bond with Kuro: the Resurrection mechanic the player will use throughout the game.
+
+The Dilapidated Temple becomes the central hub for the rest of the game. The Sculptor fits and upgrades Prosthetic Tools when Wolf returns with base items and upgrade materials. Emma provides medicinal upgrades and gradually opens up dialogue branches that hint at the player's options later in the story. Both the temple's Buddha Idol and every other Sculptor's Idol in the world serve as the game's checkpoint system — sitting at an idol restores Wolf's Healing Gourd charges but respawns most non-boss enemies.
+
+This beat also introduces the game's core economy: Skill Points (spent on Combat Arts and passive nodes), Sen (currency), Prayer Beads (four make a Prayer Necklace, which raises Vitality and Posture), and Gourd Seeds (given to Emma to expand Healing Gourd uses). All of these are persistent across deaths, with caveats: dying without resurrecting drops half of your unspent XP and Sen, but Unseen Aid sometimes cancels that loss.
+</entity>
+<entity node_id="mushin_arts" type="skill">
+Mushin Arts is the high-tier skill tree that unlocks after defeating Genichiro Ashina. Up until that fight, the player has had access to three skill trees — Shinobi, Prosthetic, and Ashina Arts — each containing combat arts, latent skills (passive bonuses), and a small number of texts. Mushin Arts is gated behind Genichiro because it represents the techniques Wolf is presumed to have learned by surpassing the head of the Ashina school.
+
+The tree contains the late-game Combat Arts most associated with high play: Mortal Draw (and its upgrade Empowered Mortal Draw), Floating Passage, One Mind, and Vault Over. It also contains several latent skills built around Posture damage, deflection generosity, and emblem efficiency, all of which start to matter much more in the boss density of the second half of the game.
+
+The tree is not strictly mandatory — none of its skills are required to complete the story — but it is the source of most "build identity" choices going forward. A player who pivots heavily into Floating Passage plays a very different game from one who specializes in Mortal Draw, and the game's late bosses are tuned with the assumption that the player is meaningfully invested in at least one Mushin tree path.
+
+Trivia: "Mushin" (無心) translates roughly to "no-mind," the Buddhist-derived swordsmanship ideal of action without conscious thought; in-universe the tree represents techniques passed down within the Ashina school's inner circle.
+</entity>
+<entity node_id="prologue_genichiro" type="story_beat">
+The opening sequence places Wolf — the player character, a shinobi sworn to the Divine Heir Kuro — at the bottom of a dry well in Ashina territory. After a brief tutorial pursuing intruders through a moonlit garden, Wolf reaches the upper floor of the tower where Kuro is held captive. The encounter with Genichiro Ashina that follows is the game's first scripted boss fight and is unwinnable on a first attempt; it functions primarily as a cinematic establishment of the antagonist's skill and the protagonist's place in the world.
+
+Genichiro is presented as a master swordsman and bowman, grandson and adopted heir to Isshin Ashina, head of the failing Ashina clan. His pursuit of Kuro is motivated by the legend of the Dragon's Heritage, an immortality-conferring lineage that Kuro carries and which Genichiro believes can save his dying province from the encroaching Interior Ministry. The prologue establishes that the player will be expected to lose fights and learn from them, that posture and deflection matter more than running away, and that the central narrative tension is the tug-of-war over Kuro.
+
+Trivia: the falling-action shot of the prologue — Wolf plummeting from the tower as Genichiro stands over Kuro — was used heavily in the game's pre-release marketing and is the first time the title's tagline "Shadows Die Twice" is contextualized, foreshadowing the Resurrection mechanic that follows.
+</entity>
+<entity node_id="shinobi_prosthetic" type="item">
+The Shinobi Prosthetic is the wooden left arm that the Sculptor fits to Wolf after the prologue. It functions as a permanent equipment slot rather than a consumable, and it is the slot into which all Prosthetic Tools — Shuriken Wheel, Flame Vent, Loaded Axe, Loaded Spear, Loaded Umbrella, Mist Raven, Sabimaru, Divine Abduction, Finger Whistle, and others — are installed.
+
+At any given time the prosthetic can hold three equipped tools, cycled with a single button. Tools are powered by Spirit Emblems, a consumable currency dropped by enemies and purchasable from merchants; each tool consumes one or more emblems per use. The prosthetic also enables the grappling hook, which dramatically changes traversal: any green hook icon in the world is a grapple point, and chains of grapples form the backbone of mid- and late-game vertical level design.
+
+Tools are not just utility — many are situational counters. The Flame Vent applies Burn to fire-vulnerable enemies, the Loaded Axe breaks shield guards and high-posture stances, and Divine Abduction can spin enemies around to expose their backs for a Deathblow. The prosthetic is the single biggest expression of player loadout choice in Sekiro; experimentation with the three-slot rotation per area is the main form of build optimization.
+</entity>
+</game_context>
+
+<player_observations>
+- 2026-05-26T16:13:15.386053+00:00 source=manual node=prologue_genichiro text='prologue_genichiro'
+- 2026-05-26T16:13:15.404111+00:00 source=manual node=lose_arm text='lose_arm'
+- 2026-05-26T16:13:15.427496+00:00 source=manual node=kusabimaru text='kusabimaru'
+- 2026-05-26T16:13:15.449678+00:00 source=manual node=shinobi_prosthetic text='shinobi_prosthetic'
+- 2026-05-26T16:13:15.472367+00:00 source=manual node=ashina_outskirts text='ashina_outskirts'
+- 2026-05-26T16:13:15.495181+00:00 source=manual node=chained_ogre text='chained_ogre'
+- 2026-05-26T16:13:15.521436+00:00 source=manual node=gyoubu_oniwa text='gyoubu_oniwa'
+- 2026-05-26T16:13:15.538214+00:00 source=manual node=hirata_estate text='hirata_estate'
+- 2026-05-26T16:13:15.561284+00:00 source=manual node=juzou_the_drunkard text='juzou_the_drunkard'
+- 2026-05-26T16:13:15.583630+00:00 source=manual node=lady_butterfly text='lady_butterfly'
+- 2026-05-26T16:13:15.606361+00:00 source=manual node=ashina_castle text='ashina_castle'
+- 2026-05-26T16:13:15.628947+00:00 source=manual node=blazing_bull text='blazing_bull'
+- 2026-05-26T16:13:15.649944+00:00 source=manual node=genichiro_ashina text='genichiro_ashina'
+- 2026-05-26T16:13:15.673129+00:00 source=manual node=mushin_arts text='mushin_arts'
+</player_observations>
+
+<instructions>
+Call the return_summary tool with the briefing.
+- Ground every claim in the entries above.
+- Set next_boss to null if the player is too early or no boss content is in scope.
+- Set completion to null when no progress signal implies scope (blind runs).
+</instructions>

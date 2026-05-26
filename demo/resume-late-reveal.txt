@@ -1,0 +1,22 @@
+WHERE YOU ARE
+Standing on the rooftop of a burning Ashina Castle, face to face with the Great Shinobi Owl. The Divine Dragon's Tears are in hand from Fountainhead Palace, and the Owl has just delivered the Iron Code ultimatum: forsake Kuro and obey your father, or break the code and stand against him.
+
+HOW YOU GOT HERE
+After cracking the structural skill check of Genichiro Ashina on the castle keep — which unlocked the Mushin Arts tree and opened Senpou, Sunken Valley, and Ashina Depths simultaneously — you worked the mid-game in order. Senpou gave up the Armored Warrior and the Folding Screen Monkeys, putting the Mortal Blade in your inventory. Sunken Valley fell next (Snake Eyes Shirahagi and Long-arm Centipede Giraffe), then the Depths and Mibu Village, where you beat the Corrupted Monk on the misted bridge. With Mortal Blade plus Monk down, the gate to Fountainhead Palace opened — you climbed the Okami court, dropped the True Corrupted Monk on the cherry-blossom bridge, and ended the realm by stabbing lightning into the Divine Dragon for the Tears.
+
+WHY YOU'RE DOING THIS
+You're Wolf, a shinobi sworn to Kuro the Divine Heir, whose Dragon's Heritage is the prize the Ashina clan and the Interior Ministry have been tearing the country apart over. Genichiro took Kuro and your arm in the prologue; the Sculptor fit you the Shinobi Prosthetic at the Dilapidated Temple and Resurrection has carried you since. The Divine Dragon's Tears are the central key item every ending pivots on — which is exactly why the Owl, presumed dead since the Hirata raid, has surfaced on this rooftop to claim them and Kuro for himself. The dialogue prompt in front of you is the lock-in point of the entire run.
+
+EXPLORE NEXT
+- Before committing to the dialogue, make sure your loadout is the one you want to carry into the back half of the game — once you pick, you're on rails for a while.
+    spoiler: Save-scumming this exact prompt is the standard community method for seeing multiple endings in the fewest playthroughs, since the two branches diverge sharply in length and gated content from this line forward.
+- If you want to round out the Mushin Arts tree, this is a natural pause to spend Skill Points — late content is tuned around at least one Mushin path being meaningfully invested.
+- Apparition-tier optional fights you skipped on the way up (the Headless in their dim caves and pools) are still sitting out there if you want their Spiritfall consumables before the finale.
+    spoiler: Divine Confetti to actually damage them and Pacifying Agent to slow the Terror meter are the two consumables that turn those fights from frantic to winnable.
+
+NEXT BOSS                                            (spoiler-gated)
+The man standing across the rooftop from you. Whichever line you pick, the next fight is decided in the next few seconds of dialogue.
+spoiler: Choosing 'Obey your father, forsake Kuro' locks you onto the Shura branch — a much shorter run that ends with Wolf fighting Emma and Isshin in defense of Kuro and transforming into a Shura demon. Choosing 'Stay loyal to Kuro, break the Iron Code' instead drops you into a duel with the Great Shinobi Owl on this rooftop, opening the long path through Demon of Hatred and the remaining three endings.
+
+COMPLETION
+Main: ~75% (Divine Dragon cleared, Tears in hand, at the Iron Code lock-in)

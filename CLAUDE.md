@@ -69,23 +69,27 @@ iff `gates ⊆ observed`. Plain set-subset check at prompt-build time.
 
 ## Current status
 
-Pre-scaffold. Only `CLAUDE.md` and `DESIGN.md` exist. Nothing built yet.
+v1 framework complete; one human-loop task remains.
 
 **v1 target: Sekiro** (developer's own second playthrough — full spoiler
 tolerance, used to validate synthesis quality before blind testing on v2
 Subnautica).
 
 v1 scope:
-- [ ] Project scaffold + schemas (`Observation`, `Boundary`, `GameState`, with `schema_version`)
-- [ ] `ManualProvider`
-- [ ] JSON store (per game)
-- [ ] Sekiro game-context: `meta.md`, `progression.yaml` (DAG), entity MDs with `gates` frontmatter
-- [ ] Sekiro save parser (`.sl2` — inspect real file, use community tooling, don't guess the binary format)
-- [ ] Prompt builder + envelope tests
-- [ ] Synthesis layer wired to Anthropic API (one-shot, no tools)
-- [ ] CLI: `onboard`, `sync`, `resume` (with `--reveal`), `status`, `log`
+- [x] Project scaffold + schemas (`Observation`, `Boundary`, `GameState`, with `schema_version`)
+- [x] `ManualProvider`
+- [x] JSON store (per game)
+- [x] Sekiro game-context: `meta.md`, `progression.yaml` (49-node DAG), entity MDs with `gates` frontmatter
+- [x] `.sl2` save-format framework (BND4 + Sekiro plaintext+MD5 slot wrap/unwrap; AES-CBC kept for DS3/Elden Ring later)
+- [x] Prompt builder + envelope tests
+- [x] Synthesis layer wired to Anthropic API (one-shot, forced `tool_use` for structured output)
+- [x] CLI: `onboard`, `sync` (stub), `resume` (with `--reveal`, `--dry-run`), `status`, `log`
+- [x] Spoiler-safe visualization: `map` (Graphviz DOT/SVG/PNG) and `journal` (Ship-Log-style HTML)
+- [ ] Sekiro save provider `collect()` — field-offset discovery via save-diff (sen, prayer beads, gourd seeds, memories, skills, idols). Save framework reads the file fine; only the offsets are missing.
 
-## Commands (planned — not yet implemented)
+A visual walkthrough of the working pieces lives in [demo/](demo/index.html) — three checkpoint states, masked vs reveal maps, envelopes proving the structural filter, and a subagent-mocked synthesis briefing.
+
+## Commands
 
 ```bash
 # install
@@ -94,12 +98,14 @@ pip install -r requirements.txt
 # tests
 python -m pytest tests/ -v
 
-# CLI (once built)
-gamebuddy onboard sekiro          # fetch wiki, build game context
-gamebuddy sync sekiro             # read save, update player state
-gamebuddy resume sekiro           # synthesize and print session briefing
-gamebuddy status                  # all tracked games, last played
-gamebuddy log sekiro "<note>"     # manual annotation
+# CLI
+gamebuddy onboard sekiro                    # draft game-context (external tools allowed)
+gamebuddy sync sekiro                       # read save, update player state (Sekiro: pending offset discovery)
+gamebuddy resume sekiro [--reveal] [--dry-run]   # synthesize briefing
+gamebuddy status                            # all tracked games, last played
+gamebuddy log sekiro <node_id-or-text>      # manual annotation
+gamebuddy map sekiro [--format svg|png|dot] [--reveal]   # progression-DAG visualization
+gamebuddy journal sekiro [--reveal]         # Ship-Log-style HTML cards
 ```
 
 ## Notes for the agent

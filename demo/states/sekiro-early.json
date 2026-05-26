@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "game_id": "sekiro",
+  "last_synced": "2026-05-26T16:13:15.495181+00:00",
+  "boundary": {
+    "observed": [
+      "ashina_outskirts",
+      "chained_ogre",
+      "kusabimaru",
+      "lose_arm",
+      "prologue_genichiro",
+      "shinobi_prosthetic"
+    ],
+    "declared": null
+  },
+  "observations": [
+    {
+      "timestamp": "2026-05-26T16:13:15.386053+00:00",
+      "source": "manual",
+      "node_id": "prologue_genichiro",
+      "payload": {
+        "text": "prologue_genichiro"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.404111+00:00",
+      "source": "manual",
+      "node_id": "lose_arm",
+      "payload": {
+        "text": "lose_arm"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.427496+00:00",
+      "source": "manual",
+      "node_id": "kusabimaru",
+      "payload": {
+        "text": "kusabimaru"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.449678+00:00",
+      "source": "manual",
+      "node_id": "shinobi_prosthetic",
+      "payload": {
+        "text": "shinobi_prosthetic"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.472367+00:00",
+      "source": "manual",
+      "node_id": "ashina_outskirts",
+      "payload": {
+        "text": "ashina_outskirts"
+      }
+    },
+    {
+      "timestamp": "2026-05-26T16:13:15.495181+00:00",
+      "source": "manual",
+      "node_id": "chained_ogre",
+      "payload": {
+        "text": "chained_ogre"
+      }
+    }
+  ],
+  "synthesis_cache": null
+}
