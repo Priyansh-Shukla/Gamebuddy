@@ -18,6 +18,7 @@ from gamebuddy.synthesis import (
     context_hash,
     render_user_prompt,
 )
+from gamebuddy.visualize import classify_nodes, count, to_dot
 
 
 @click.group()
@@ -179,6 +180,72 @@ def onboard(game: str, force: bool) -> None:
     written = onboarder.run()
     click.echo(f"\n\nWrote {len(written)} files under {target}/")
     click.echo("Review the draft, edit as needed, then commit.")
+
+
+@cli.command("map")
+@click.argument("game")
+@click.option(
+    "--out",
+    type=click.Path(dir_okay=False, path_type=Path),
+    default=None,
+    help="Output file. Defaults to ./<game>-map.<format>.",
+)
+@click.option(
+    "--format",
+    "fmt",
+    type=click.Choice(["dot", "svg", "png"]),
+    default="svg",
+    show_default=True,
+)
+@click.option(
+    "--reveal",
+    is_flag=True,
+    help="Authoring view — render gated nodes and unmask frontier labels.",
+)
+def map_(game: str, out: Path | None, fmt: str, reveal: bool) -> None:
+    """Render the progression DAG for GAME with player-state overlay."""
+    import shutil
+    import subprocess
+
+    context = load_game_context(games_dir(), game)
+    path = state_path(game)
+    state = load_state(path) if path.exists() else None
+
+    classes = classify_nodes(context, state)
+    counts = count(classes)
+    dot = to_dot(context, state, reveal=reveal)
+
+    if out is None:
+        out = Path(f"{game}-map.{fmt}")
+
+    if fmt == "dot":
+        out.write_text(dot, encoding="utf-8")
+    else:
+        if shutil.which("dot") is None:
+            click.echo(
+                "Graphviz `dot` not found on PATH. Install Graphviz, or re-run "
+                "with --format dot to emit raw DOT.",
+                err=True,
+            )
+            raise SystemExit(1)
+        try:
+            subprocess.run(
+                ["dot", f"-T{fmt}", "-o", str(out)],
+                input=dot,
+                text=True,
+                check=True,
+                capture_output=True,
+            )
+        except subprocess.CalledProcessError as exc:
+            click.echo(f"dot failed: {exc.stderr}", err=True)
+            raise SystemExit(1)
+
+    suffix = " (reveal)" if reveal else ""
+    click.echo(
+        f"Wrote {out}  "
+        f"[observed={counts.observed} frontier={counts.frontier} "
+        f"gated={counts.gated}]{suffix}"
+    )
 
 
 def _humanize(td: timedelta) -> str:
