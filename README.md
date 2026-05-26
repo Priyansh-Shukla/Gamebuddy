@@ -7,9 +7,22 @@ files where it can, lets you annotate where it can't, and produces a
 re-immersion briefing that respects how far you've actually progressed — no
 plot reveals you didn't ask for.
 
-## Status
+## See it in action
 
-**Pre-scaffold.** Nothing runs yet. Sekiro v1 is the current build target.
+**[Live demo →](https://priyansh-shukla.github.io/Gamebuddy/demo/)**
+
+Visual walkthrough of v1 against Sekiro: progression-DAG maps, Ship-Log-style
+journals, the structural spoiler filter in action across three player-state
+checkpoints, and a mocked synthesis briefing. The headline shot:
+
+| Player view — masked | Authoring view — reveal |
+| :---: | :---: |
+| <img src="demo/maps/sekiro-mid-masked.svg" alt="Sekiro progression DAG at mid checkpoint, spoiler-masked" /> | <img src="demo/maps/sekiro-mid-reveal.svg" alt="Sekiro progression DAG at mid checkpoint, full reveal" /> |
+| 14 observed, 5 frontier (`? (type)` stubs), 30 gated nodes invisible | All 49 nodes — endings, late-game bosses, branching paths |
+
+Same code, same data, one boolean. The model that synthesizes a briefing
+**literally never receives** the gated nodes — the filter happens at
+prompt-build time, not by asking the model nicely.
 
 ## How it works
 
@@ -25,7 +38,15 @@ plot reveals you didn't ask for.
   structurally, not by prompt instructions.
 - **CLI-first, on-demand.** No daemon.
 
-Full design in [DESIGN.md](DESIGN.md).
+Full design in [DESIGN.md](DESIGN.md). Per-file demo guide in [demo/README.md](demo/README.md).
+
+## Status
+
+**v1 framework complete; one human-loop task remains.** Save-format crypto,
+synthesis layer, structural filter, CLI, and visualization all working. The
+remaining v1 task is field-offset discovery in Sekiro `.sl2` slot bodies —
+which bytes correspond to sen / prayer beads / gourd seeds / etc. — done
+by save-diff with the developer at the controls.
 
 ## Roadmap
 
