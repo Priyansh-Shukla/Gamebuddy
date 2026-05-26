@@ -137,8 +137,7 @@ nodes:
     requires: [fountainhead_palace]
   - id: divine_dragon
     type: boss
-    requires: [fountainhead_palace]
-    suggests: [true_corrupted_monk]
+    requires: [fountainhead_palace, true_corrupted_monk]
 
   # --- Late game: Owl confrontation and ending branch ---
   - id: ashina_reservoir_revisited
